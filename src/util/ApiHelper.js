@@ -1,5 +1,6 @@
 import axios from "./config"
-import * as cheerio from 'cheerio';
+// import * as cheerio from 'cheerio';
+// import { DOMParser } from 'react-native-html-parser';
 
 const clevelandURL = "https://openaccess-api.clevelandart.org/api/artworks/"
 const chicagoURL = "https://api.artic.edu/api/v1/artworks?fields=id,title,image_id"
@@ -76,16 +77,36 @@ function randomize(inputArray, numOfRounds){
 
 // FUNCTION: getCnnImgURLs
 // DESCRIPTION: Web scrapes the URL page source for <script> tag then adds img URLs to list
-async function getCnnImgURLs(URL){
-    const htmlString = await axios.get(URL).then(response => response.data)
-    const $ = cheerio.load(htmlString)
-    const imgElements = $("body").find("img")
-    let imgURLs = []
-    for (let i = 0; i < imgElements.length; i++){
-        imgURLs.push(imgElements[i].attribs.src)
+// async function getCnnImgURLs(URL){
+//     const htmlString = await axios.get(URL).then(response => response.data)
+//     const $ = cheerio.load(htmlString)
+//     const imgElements = $("body").find("img")
+//     let imgURLs = []
+//     for (let i = 0; i < imgElements.length; i++){
+//         imgURLs.push(imgElements[i].attribs.src)
+//     }
+//     return imgURLs
+// }
+
+async function getCnnImgURLs(URL) {
+    try {
+      const response = await fetch(URL);
+      const htmlString = await response.text();
+  
+      // Regular expression to find all img tags and extract src attributes
+      const imgURLs = [...htmlString.matchAll(/<img[^>]+src="([^">]+)"/g)].map(match => match[1]);
+  
+      return imgURLs;
+    } catch (error) {
+      console.error('Error fetching or parsing HTML:', error);
+      return [];
     }
-    return imgURLs
-}
+  }
+
+
+
+
+
 
 // FUNCTION: getCurrentCnnURL
 // DESCRIPTION: Starting from today, iterates through the past 365 days for the most current valid CNN URL

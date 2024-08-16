@@ -26,6 +26,16 @@ import MidGameWaitingRoom from './src/components/MidGameWaitingRoom';
 import VoteImage from './src/components/VoteImage';
 import CnnDeck from './src/components/CnnDeck';
 
+
+// import { GoogleOAuthProvider } from '@react-oauth/google';
+// import { GoogleLogin } from '@react-oauth/google';
+// // import { useGoogleLogin } from '@react-oauth/google';
+// //import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
+// //import axios from '../util/config';
+// import { CLIENT_ID } from '@env';
+// import { CLIENT_SECRET } from '@env';
+// console.log("client id: ", CLIENT_ID);
+
 export const ErrorContext = createContext();
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +48,7 @@ export default function App() {
 
   
   return (
+    // <GoogleOAuthProvider clientId="CLIENT_ID">
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Landing">
               <Stack.Screen name="Landing" component={Landing} />
@@ -69,6 +80,7 @@ export default function App() {
               
             </Stack.Navigator>
         </NavigationContainer>
+        // </GoogleOAuthProvider>
   );
 }
 

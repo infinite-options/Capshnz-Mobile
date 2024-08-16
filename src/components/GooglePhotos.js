@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Button, Image, ScrollView, Alert, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { NavigationHelpersContext, useNavigation, useRoute } from '@react-navigation/native';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
-// import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 //import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
 import axios from '../util/config';
+
 import { CLIENT_ID } from '@env';
 import { CLIENT_SECRET } from '@env';
 
 export default function GooglePhotos() {
-    const navigation = useNavigation();
+
+   const navigation = useNavigation();
+   useEffect(() => {
+    const clientID  = CLIENT_ID;
+    console.log("client id: ", clientID);
+    const clientSecret  = CLIENT_SECRET;
+    console.log("client secret: ", clientSecret);
+    navigation.goBack();
+   }, [navigation]); 
+
+    /* 
     const route = useRoute();
     const [userData, setUserData] = useState(route.params);
+   
     const [tokens, setTokens] = useState({});
     const [albums, setAlbums] = useState([]);
     const [signedIn, setSignedIn] = useState(false);
     const [selectedAlbum, setSelectedAlbum] = useState("");
     const [albumImages, setAlbumImages] = useState([]);
     const searchGooglePhotosURL = "https://photoslibrary.googleapis.com/v1/mediaItems:search";
+*/
 
-    const clientID  = CLIENT_ID;
-    console.log("client id: ", clientID);
-    const clientSecret  = CLIENT_SECRET;
-    console.log("client secret: ", clientSecret);
-    
+/*
 
     const login = useGoogleLogin({
         flow: 'auth-code',
@@ -147,8 +156,9 @@ export default function GooglePhotos() {
             )}
         </View>
     );
+    */
 }
-
+/*
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -181,4 +191,6 @@ const styles = StyleSheet.create({
     continueButtonContainer: {
         marginTop: 20,
     },
+    
 });
+*/
