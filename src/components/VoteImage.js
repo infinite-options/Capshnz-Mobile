@@ -4,13 +4,12 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 //import { useCookies } from 'react-cookie';
 
-import { getSubmittedCaptions, postVote, sendError, getScoreBoard } from '../util/Api';
+import { getCurrentRound,getSubmittedCaptions, postVote, sendError, getScoreBoard } from '../util/Api';
 import useAbly from '../util/ably';
 import { ErrorContext } from "../../App";
 import LoadingScreen from './LoadingScreen';
 import { handleApiError } from '../util/ApiHelper';
 import Axios from 'axios';
-import { getCurrentRound } from "../util/Api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { Worker } from 'react-native-workers';
 
