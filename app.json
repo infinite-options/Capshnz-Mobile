@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Capshnz-Mobile",
+    "slug": "Capshnz-Mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.varsana.CapshnzMobile"
+      
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.varsana.CapshnzMobile"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme":"Capshnz-Mobile"
+  }
+}
