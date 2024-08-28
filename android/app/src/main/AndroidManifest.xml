@@ -25,6 +25,8 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.varsana.CapshnzMobile"/>
+        <data android:scheme="Capshnz-Mobile"/>
+        <data android:scheme="com.capshnz.CapshnzMobile"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>

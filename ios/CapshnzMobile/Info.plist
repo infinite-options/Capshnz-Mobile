@@ -27,7 +27,8 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.varsana.CapshnzMobile</string>
+          <string>Capshnz-Mobile</string>
+          <string>com.capshnz.CapshnzMobile</string>
         </array>
       </dict>
     </array>

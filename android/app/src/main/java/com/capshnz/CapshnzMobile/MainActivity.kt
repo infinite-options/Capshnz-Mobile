@@ -1,4 +1,4 @@
-package com.varsana.CapshnzMobile
+package com.capshnz.CapshnzMobile
 
 import android.os.Build
 import android.os.Bundle

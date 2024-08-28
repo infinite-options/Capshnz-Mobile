@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import { useNavigation,useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableOpacity, Image } from 'react-native';
 import { addUserByEmail } from "../util/Api";
 
@@ -22,22 +22,29 @@ export default function Landing() {
     
     };
 
+    useFocusEffect(
+      React.useCallback(() => {
+          navigation.setOptions({ headerShown: false });
+      }, [navigation])
+    );
+
     const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!isInvalid) {
 
         try {
-           // console.log('Inside');
+           
            
         const res = await addUserByEmail(email);
-        setCookie("email", email, { path: "/" });
+       // setCookie("email", email, { path: "/" });
         const userData = {
             ...res,
             email: email,
             playerUID: res.user_uid,
         };
         navigation.navigate("EnterName", {userData });
+        
         } catch (err) {
         console.error(err);
         }

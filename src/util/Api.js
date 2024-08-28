@@ -80,12 +80,9 @@ async function addUser(userData) {
     return playerInfo */
 
     try {
-        // console.log('Updated payload Data:', payload);
+
         const response = await axios.post(addUserURL, payload);
-        // console.log("addUser: ", addUserURL)
-        // console.log("addUser Payload: ", payload)
-        
-        // console.log('Add user - Response:', response.data); // Log the response
+
         return response.data;
       } catch (error) {
         if (error.response) {
@@ -106,18 +103,9 @@ async function addUser(userData) {
 }
 
 async function addUserByEmail(email) {
-    // console.log("addUserByEmail: ", addUserByEmailURL)
-    // console.log("addUserByEmail Payload: ", {email})
     const response = await axios.post(addUserByEmailURL, 
         { email })
-    console.log("addUserByEmail Response: ", response.data)
-   /*     
-    console.log('Add by email id');
-    console.log('Response status:', response.status);
-    console.log('Response status text:', response.statusText);
-    console.log('Response headers:', response.headers);
-    console.log('Response data:', response.data);
-    */    
+
     return response.data
    
 }
@@ -142,12 +130,10 @@ async function createGame(playerUID, numOfRounds, roundTime, scoreType){
         round_time: "00:00:" + roundTime.toString(),
         scoring_scheme: scoreType
     }
-    // console.log("CreateGameURL: ", createGameURL)
-    // console.log("CreateGame Payload: ", payload)
+
     const gameInfo = await axios.post(createGameURL, payload)
         .then(response => response.data)
 
-    // console.log("Create Game Response: ", gameInfo)
     return gameInfo
 }
 
@@ -159,12 +145,11 @@ async function joinGame(userData){
             game_code: userData.gameCode,
             user_uid: userData.playerUID
         }
-        // console.log('joinGameURL: ', joinGameURL);
-        // console.log('joinGame payload: ', payload);
+
         
         const joinGamerespone =  await axios.post(joinGameURL, payload)
              .then(response => response.data)
-        // console.log("Join Game Response: ", joinGamerespone)
+
         return
    
 }
@@ -187,11 +172,10 @@ async function selectDeck(deckUID, gameCode, roundNumber){
         deck_uid: deckUID.toString(),
         round_number: roundNumber.toString()
     }
-    // console.log('SelectDeckURL: ', selectDeckURL);
-    // console.log('SelectDeck payload: ', payload);
+
     const deckresponse =  await axios.post(selectDeckURL, payload)
         .then(response => response.data)
-    // console.log("Select Deck Response: ", deckresponse)
+
     return
 }
 
@@ -225,7 +209,7 @@ async function postRoundImage(gameCode, roundNumber, imageURL){
 }
 
 async function getDatabaseImage(userData){
-    // console.log('Data Images');
+
     const imageURL = await axios.get(getImageURL + userData.gameCode + "," + userData.roundNumber)
         .then(response => response.data.image_url)
     return imageURL
@@ -296,42 +280,17 @@ try{
         images: imageURLs
     };
     
-   // console.log("Create Rounds payload: ", payload);
-    //console.log("above postCreationRounds");
-   // console.log("Create Rounds URL: ", createRounds);
-   // console.log("1")
+
     const imageURL = await axios.post(createRounds, payload)
    // .then(response => response.data.image)
    .then(response => response.data)
 
-//console.log("ALL IMAGE URLS: ", )
-   // console.log("ImageURL: ", imageURL)
-    //console.log("2")
-   // console.log(imageURL.image);
-   //const data = await response.json();
-  
-
-  // const data = response.json();
-  //const data = await imageURL.image();
-  // console.log("3")
-  // console.log('Returned URL: ', data);
-
-
-
-
-/*
-   const deckresponse =  await axios.post(selectDeckURL, payload)
-   .then(response => response.data)
-console.log("Select Deck Response: ", deckresponse)
-*/
    return imageURL.image;
 
 }        
 catch(error) {
     if(error.response){
         // the request was made and the server responded with the response code that is out of 2xx
-      //  console.log('response',error.response.data);
-      //  console.log('status ',error.response.status);
         console.log('headers ',error.response.headers);
         console.log('request ',error.request );
         console.log('error', error.message);
@@ -374,7 +333,7 @@ async function getNextImage(gameCode, roundNumber) {
     let error;
 
     while (retries < maxRetries) {
-        console.log("Trying API---->", retries , +" times");
+    
         try {
            // const response = await axios.post(nextImage, payload);
            // return response.data.image;
@@ -382,14 +341,11 @@ async function getNextImage(gameCode, roundNumber) {
             const imageURL = await axios.post(nextImage, payload)
             .then(response => response.data)
 
-            console.log('Get next image', imageURL.image);
-            console.log('game Code ', gameCode);
-            console.log('roundNumber ', roundNumber);
             return imageURL.image;
 
         } catch (err) {
             // Capture the error 
-            console.log("Catch Next Image URL")
+
             error = err;
             // Increment the retry count
             retries++;
@@ -417,8 +373,6 @@ async function addFeedback(userData, feedback) {
         email: userData.email,
         feedback: feedback
     }
-    console.log("inside the addFeedback api call")
-    console.log("addFeedback payload: ", payload)
     await axios.post(addFeedbackURL, payload)
 }
 async function summary(gameUID) {

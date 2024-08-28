@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.varsana.CapshnzMobile"
+      "bundleIdentifier": "com.capshnz.CapshnzMobile"
       
     },
     "android": {
@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.varsana.CapshnzMobile"
+      "package": "com.capshnz.CapshnzMobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
