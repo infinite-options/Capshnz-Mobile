@@ -329,14 +329,8 @@ const styles = StyleSheet.create({
     marginBottom: -10,
     width: "80%",
   },
-  scoreboardTitle: {
-    fontSize: 30,
-    fontWeight: '700',
-    fontFamily: 'Grandstander',
-    color: 'black',
 
-    
-  },
+
   imageContainer: {
     width: 340,
     height: 300,
@@ -351,10 +345,7 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 10,
   },
-  polygonContainer: {
-    alignSelf: 'center',
-    marginBottom: -8,
-  },
+
   scoreboardContainer: {
     maxWidth: '95%',
     padding: 20,
@@ -421,16 +412,7 @@ const styles = StyleSheet.create({
     fontFamily: "Grandstander",
     fontWeight: "700",
   },
-  deckTitleContainer: {
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  deckTitle: {
-    fontSize: 30,
-    fontWeight: '700',
-    fontFamily: 'Grandstander',
-    color: 'black',
-  },
+
   downwardPolygonRight: {
     marginTop: -10,
     width: 50, 

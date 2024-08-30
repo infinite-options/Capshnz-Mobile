@@ -130,7 +130,7 @@ export default function GooglePhotos() {
       return albums.map((entry, index) => (
           <View key={index} style={styles.albumButtonContainer}>
               <Button
-                  title={entry.title}
+                  title={entry.title ? String(entry.title) : "Untitled"}
                   color={selectedAlbum === entry.title ? "selectedGooglePhotos" : "buttonGooglePhotos"}
                   onPress={() => {
 

@@ -10,6 +10,8 @@ export default function ChooseScoring() {
   const route = useRoute();
   const [userData, setUserData] = useState(route.params.userData);
   const [scoreType, setScoreType] = useState("");
+  const [isVoteClicked, setIsVoteClicked] = useState(false);
+  const [isRankClicked, setIsRankClicked] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,6 +35,18 @@ export default function ChooseScoring() {
 
   }
 
+  const handleClick = (scoretype) => {
+  if (scoretype=="R") {
+    setIsRankClicked(true); 
+    setIsVoteClicked(false);
+  }
+  else {
+    setIsVoteClicked(true); 
+    setIsRankClicked(false); 
+  }
+    setScoreType(scoretype);
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.innerContainer}>
@@ -45,8 +59,8 @@ export default function ChooseScoring() {
         <Text style={styles.header}></Text>
         <Text style={styles.header}>Choose a scoring system</Text>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => setScoreType("V")}
+          style={[styles.button, isVoteClicked && styles.buttonClicked]} 
+          onPress={() => handleClick("V")}
         >
           <Text style={styles.buttonText}>Score by Votes</Text>
         </TouchableOpacity>
@@ -58,8 +72,8 @@ export default function ChooseScoring() {
         <Text style={styles.description}>player receives 2 points per vote</Text>
         <Text style={styles.scoreText}>OR</Text>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => setScoreType("R")}
+          style={[styles.button, isRankClicked && styles.buttonClicked]} 
+          onPress={() => handleClick("R")}
         >
           <Text style={styles.buttonText}>Score by Ranking</Text>
         </TouchableOpacity>
@@ -83,11 +97,11 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: "rgba(183, 214, 225, 1)",
-      paddingBottom: "2rem",
-      paddingTop: "2rem",
+      paddingBottom: 20,
+      paddingTop: 20,
     },
     innerContainer: {
-      width: "100%",
+      width: '100%',
       maxWidth: 440,
       alignItems: "center",
       paddingHorizontal: 20,
@@ -114,10 +128,12 @@ const styles = StyleSheet.create({
       width: 330,
       height: 60,
       backgroundColor: "rgba(237, 70, 70, 0.59)",
+      borderColor: 'rgba(237, 70, 70, 0.59)',
       borderRadius: 30,
       justifyContent: "center",
       alignItems: "center",
       marginVertical: 10,
+      borderWidth: 2,
     },
     buttonText: {
       color: "white",
@@ -163,7 +179,11 @@ const styles = StyleSheet.create({
       right: -80,
       top: -20,
     },
-
+    buttonClicked: {
+      borderColor: 'yellow', 
+      borderColor: 'yellow',
+      borderWidht: 2,
+    },
   });
   
 

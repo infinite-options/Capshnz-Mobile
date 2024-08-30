@@ -4,6 +4,7 @@ const ABLY_API_KEY = process.env.EXPO_PUBLIC_ABLY_API_KEY;
 
 const useAbly = (() => {
   let channel = null;
+  let channel_Name = null;
 
   return (channelId) => {
     const setChannelId = async (channelId) => {
@@ -13,6 +14,7 @@ const useAbly = (() => {
         channel = ablyClient.channels.get(channelName);
         await channel.attach();
       }
+      channel_Name=channelName;
     };
 
     if (channelId) {
@@ -23,6 +25,11 @@ const useAbly = (() => {
 
       await channel.publish(message);
     
+    };
+
+    const getChannel = async () => {
+
+      return await channel_Name;
     };
 
     const getMembers = async () => {
@@ -43,23 +50,23 @@ const useAbly = (() => {
     };
 
 
-const subscribe = async (listener) => {
-  try {
+    const subscribe = async (listener) => {
+      try {
 
-    if (channel.state !== 'attached') {
-      await channel.attach();
-    }
+        if (channel.state !== 'attached') {
+          await channel.attach();
+        }
 
-    const subscribePromise = channel.subscribe(listener);
-    
-    // Add a timeout for subscription
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error("Subscription timed out")), 10000)
-    );
-    await Promise.race([subscribePromise, timeoutPromise]);
-  } catch (error) {
-    console.error("Error in subscribe:", error);
-  }
+        const subscribePromise = channel.subscribe(listener);
+        
+        // Add a timeout for subscription
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Subscription timed out")), 10000)
+        );
+        await Promise.race([subscribePromise, timeoutPromise]);
+      } catch (error) {
+        console.error("Error in subscribe:", error);
+      }
 };
 
     const unSubscribe = () => {
@@ -82,6 +89,8 @@ const subscribe = async (listener) => {
       onMemberUpdate,
       unSubscribe,
       detach,
+      getChannel,
+      channel,
     };
   };
 })();

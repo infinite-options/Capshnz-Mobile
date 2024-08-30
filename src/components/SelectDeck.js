@@ -131,9 +131,9 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     width: "100%",
-    minHeight: "100vh",
     backgroundColor: "#C8DAD8",
     padding: 20,
+    marginTop: 30,
   },
   closeButton: {
     position: "absolute",
