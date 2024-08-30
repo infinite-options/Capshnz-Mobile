@@ -10,6 +10,7 @@ export default function Landing() {
     const [cookies, setCookie] = useState(["email"]);
     const [cookiesUsed, setCookiesUsed] = useState(false);
     const navigation = useNavigation();
+
     const handleEmailChange = (inputEmail) => {
     setEmail(inputEmail);
     const testEmail = /[\w\d]{1,}@[\w\d]{1,}.[\w\d]{1,}/;

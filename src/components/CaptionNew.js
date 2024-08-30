@@ -553,6 +553,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
+  circleButton: {
+    width: 60, 
+    height: 60, 
+    borderRadius: 30, 
+    backgroundColor: 'grey', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+  },
+
 });
 export default CaptionNew;
 

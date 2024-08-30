@@ -159,10 +159,8 @@ export default function ChooseRounds() {
         flexGrow: 1,
         alignItems: "center",
         backgroundColor: "rgba(153, 90, 98, 0.70)",
-        paddingBottom: "1rem",
-        paddingTop: "2rem",
-        borderWidth: 2,
-        borderColor: "black",
+        paddingBottom: 10,
+        paddingTop: 20,
         width: "100%",
 
       },

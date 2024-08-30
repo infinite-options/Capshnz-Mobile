@@ -44,7 +44,7 @@ export default function EnterName() {
     
       const handleSubmit = async (event) => {
         try {
-          event.preventDefault();
+        //  event.preventDefault();
         
           const updatedUserData = {
             ...userData,
@@ -63,6 +63,7 @@ export default function EnterName() {
               }
           }
 
+         
           if (userData.user_code === "TRUE"){
 
             navigation.navigate("StartGame", {...updatedUserData});
@@ -206,18 +207,7 @@ const styles = StyleSheet.create({
         width: 50, 
         height: 50, 
       },
-      input: {
-        width: '80%',
-        height: 60,
-        backgroundColor: 'white',
-        borderRadius: 40,
-        fontSize: 26,
-        fontFamily: 'Grandstander',
-        fontWeight: '500',
-        textAlign: 'center',
-        marginVertical: 10,
-        paddingHorizontal: 20,
-      },
+
       upwardPolygon: {
         marginBottom: -10,
         width: 50, 

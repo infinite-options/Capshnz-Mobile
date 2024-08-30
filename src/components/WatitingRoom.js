@@ -1,10 +1,10 @@
 import React, { createContext,useState, useContext, useEffect } from "react";
 import { useNavigation, useRoute ,useFocusEffect} from "@react-navigation/native";
 import { handleApiError } from "../util/ApiHelper";
-import useAbly from "../util/ably";
+import  useAbly from "../util/ably";
 import { getApiImages, postCreateRounds,getGameImageForRound } from "../util/Api";
 import { getDecks, selectDeck } from "../util/Api";
-import {View, Text, Button, Image, TextInput, TouchableOpacity,StyleSheet, FlatList,Clipboard} from "react-native";
+import {View, Text, Button, Image, TextInput, TouchableOpacity,StyleSheet, FlatList} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ErrorContext = createContext();
@@ -21,7 +21,8 @@ export default function WaitingRoom(){
   const [isLoading, setLoading] = useState(false);
   const context = useContext(ErrorContext);
   const [decksInfo, setDecksInfo] = useState([]);
-  
+  const [channelName,setChannelName]= useState("");
+
   useFocusEffect(
     React.useCallback(() => {
         navigation.setOptions({ headerShown: false });
@@ -36,6 +37,8 @@ export default function WaitingRoom(){
       addMember,
       unSubscribe,
       removeMember,
+      getChannel,
+      channel,
     } = useAbly(userData.gameCode);
   
     useEffect(() => {
@@ -44,10 +47,11 @@ export default function WaitingRoom(){
         setDecksInfo(decksInfo);
       }
       getDecksInfo();
+      console.log("Channel in WaitingRoom:", channel.connectionManager.lastActivity);
     }, [userData.playerUID]);
   
     function copyGameCodeButton() {
-      Clipboard.setString(userData.gameCode);
+   //   Clipboard.setString(userData.gameCode);
       setButtonText("Copied!");
       setTimeout(() => {
         setButtonText("Share with other players");
@@ -101,6 +105,10 @@ export default function WaitingRoom(){
     const refreshLobby = async () => {
       const members = await getMembers();
       setLobby(members.map((member) => member.data));
+
+      const channel = await getChannel();
+      setChannelName(channel);
+      console.log(channel);
     };
   
     const initializeLobby = async () => {
@@ -142,37 +150,57 @@ export default function WaitingRoom(){
 
           <Text style={styles.closeButtonText}>X</Text>
         </TouchableOpacity>
-      <Image
-          source={require('../assets/Polygon 1.svg')}
-          style={styles.downwardPolygon}
-      />
+
       <TextInput style={styles.input} editable={false}>Waiting for all Players . . .</TextInput>
       <Image
         source={require('../assets/polygon-downwards-white.png')}
         style={styles.downwardPolygonRight}
         />
-  
+      
       <View style={styles.container}>
-      <FlatList
-          data={lobby}
-          keyExtractor={(item, index) => index.toString()}
-          style={styles.lobbyList}
-          contentContainerStyle={styles.lobbyContentContainer}
-          renderItem={({ item }) => (
-          <View style={styles.lobbyPlayer}>
-              <View style={styles.playerIcon}>
-    
-              </View>
-              <Text style={styles.playerAlias}>{item.alias}</Text>
-          </View>
-          )}
-      />
+      {/*  
+      {lobby.length === 1 && (
+        <Text style={styles.emptyMessage}>Waiting for other players to join</Text>
+        
+       )&&  <Text style={styles.emptyMessage}>Ably channel not working</Text>
+       }
+      */}
+
+{lobby.length === 1 ? (
+    <>
+      <Text style={styles.emptyMessage}>Waiting for other players to join</Text>
+      <Text style={styles.emptyMessage}>Ably channel not working</Text>
+      <Text style={styles.emptyMessage}>Channel name is "{channelName}"</Text>
+      <Text style={styles.emptyMessage}>Last acttvity is "{channel.connectionManager.lastActivity}"</Text>
+    </>
+  ) : (
+    <>
+    <Text style={styles.emptyMessage}>Ably channel working </Text>
+    <Text style={styles.emptyMessage}>Last acttvity is "{channel.connectionManager.lastActivity}"</Text>
+    </>
+  )}
+        <FlatList
+            
+            data={lobby}
+            keyExtractor={(item, index) => index.toString()}
+          //  style={styles.lobbyList}
+          //  contentContainerStyle={styles.lobbyContentContainer}
+            renderItem={({ item }) => (
+            <View style={styles.lobbyPlayer}>
+                <View style={styles.playerIcon}>
+      
+                </View>
+                <Text style={styles.playerAlias}>{item.alias}</Text>
+            </View>
+            )}
+        />
+      
   
             
       <View style={styles.container}>
       {userData.host && userData.deckSelected && (
     
-        <TouchableOpacity onPress={selectDeckButton} style={styles.deck}>
+        <TouchableOpacity onPress={selectDeckButton}>
   
           <Image
           
@@ -226,8 +254,11 @@ export default function WaitingRoom(){
         style={styles.buttonSelected}
         onPress={startGameButton}
       >
-          <Text style={styles.buttonText}>Start Game</Text>
+
+            <Text style={styles.buttonText}>Start Game</Text>
+
       </TouchableOpacity> 
+      
        
     )}
   
@@ -242,6 +273,8 @@ export default function WaitingRoom(){
   alignItems: "center",
   backgroundColor: "#CBDFBD",
   padding: 16,
+  paddingTop: 50,
+  marginTop: 20,
   },
   header: {
   width: "100%",
@@ -400,5 +433,11 @@ export default function WaitingRoom(){
     fontSize: 25, 
     fontWeight: 'bold', 
     color: 'white', 
+  },
+  emptyMessage: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 5,
   },
   });
