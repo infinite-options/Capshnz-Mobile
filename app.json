@@ -14,7 +14,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.capshnz.CapshnzMobile"
-      
     },
     "android": {
       "adaptiveIcon": {
@@ -26,6 +25,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme":"Capshnz-Mobile"
+    "scheme": "Capshnz-Mobile",
+    "extra": {
+      "eas": {
+        "projectId": "f44dd058-0678-4242-a483-9ced760bfee8"
+      }
+    }
   }
 }
