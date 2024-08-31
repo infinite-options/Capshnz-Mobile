@@ -2,7 +2,7 @@
   "expo": {
     "name": "Capshnz-Mobile",
     "slug": "Capshnz-Mobile",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +13,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.capshnz.CapshnzMobile"
+      "bundleIdentifier": "com.capshnz.CapshnzMobile",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
