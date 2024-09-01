@@ -26,6 +26,9 @@ import Confirmation from './src/components/Confirmation';
 import LoadingScreen from './src/components/LoadingScreen';
 import MidGameWaitingRoom from './src/components/MidGameWaitingRoom';
 import CnnDeck from './src/components/CnnDeck';
+import TransitionPage from './src/components/TransitionPage.js';
+
+
 
 
 
@@ -61,6 +64,10 @@ export default function App() {
               <Stack.Screen name="VerificationOtp" component={VerificationOtp} />
               <Stack.Screen name="ChooseScoring" component={ChooseScoring} />
               <Stack.Screen name="ChooseRounds" component={ChooseRounds} />
+
+              <Stack.Screen name="ChooseroundToWaitingRoom" component={TransitionPage} />
+
+
               <Stack.Screen name="WaitingRoom" component={WaitingRoom} />
               <Stack.Screen name="SelectDeck" component={SelectDeck} /> 
               <Stack.Screen name="JoinGame" component={JoinGame} />
@@ -76,7 +83,7 @@ export default function App() {
               <Stack.Screen name="Confirmation" component={Confirmation} />
               <Stack.Screen name="GameRules" component={GameRules} />
               <Stack.Screen name="CnnDeck" component={CnnDeck} />
-
+             
               {/* 
 
               <Stack.Screen name="Waiting" component={Waiting} />

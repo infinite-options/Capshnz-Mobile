@@ -426,6 +426,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#7580B5D9',
     //'#D9D9D9', 
     //'#f8f9fa',
+    marginTop: 20,
   },
   center: {
     alignItems: 'center'

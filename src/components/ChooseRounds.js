@@ -94,7 +94,8 @@ export default function ChooseRounds() {
        
         navigation.reset({
           index: 0,
-          routes: [{ name: "WaitingRoom", params: {...updatedUserData} }],
+         // routes: [{ name: "WaitingRoom", params: {...updatedUserData} }],
+         routes: [{ name: "ChooseroundToWaitingRoom", params: {...updatedUserData} }],
         });
 
       } catch (error) {

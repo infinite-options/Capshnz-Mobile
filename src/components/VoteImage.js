@@ -413,6 +413,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#878787',
+    marginTop: 20,
   },
   loadingContainer: {
     flex: 1,

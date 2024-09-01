@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E58D80',
     //paddingTop: 10,
     //paddingBottom: 10,
+    marginTop: 30,
   },
   closeButtonContainer: {
     alignSelf: 'flex-end',

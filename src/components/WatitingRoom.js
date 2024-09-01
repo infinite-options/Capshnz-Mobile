@@ -43,8 +43,14 @@ export default function WaitingRoom(){
   
     useEffect(() => {
       async function getDecksInfo() {
+        try{
         const decksInfo = await getDecks(userData.playerUID);
         setDecksInfo(decksInfo);
+      }
+      catch{
+            console.log("Error in ably getDecks function");
+    
+          } 
       }
       getDecksInfo();
       console.log("Channel in WaitingRoom:", channel.connectionManager.lastActivity);
@@ -103,17 +109,38 @@ export default function WaitingRoom(){
     };
   
     const refreshLobby = async () => {
+      try{
       const members = await getMembers();
       setLobby(members.map((member) => member.data));
 
       const channel = await getChannel();
       setChannelName(channel);
       console.log(channel);
+    }
+    catch{
+          console.log("Error in ably refreshLobby and channel function");
+  
+        } 
+
     };
   
     const initializeLobby = async () => {
-      await onMemberUpdate(refreshLobby);
+      try {
+        await onMemberUpdate(refreshLobby);
+      }
+      catch{
+          console.log("Error in ably onMemberUpdate function");
+
+      } 
+      try {
       await addMember(userData.playerUID, { alias: userData.alias });
+    }
+    catch{
+        console.log("Error in ably addMember function");
+
+    } 
+
+    try{
       await subscribe(async (event) => {
         if (event.data.message === "Start Game") {
           const updatedUserData = {
@@ -127,14 +154,21 @@ export default function WaitingRoom(){
             roundTime: event.data.roundTime,
             imageURL: event.data.imageURL,
           };
+
           
           setUserData(updatedUserData);
          // await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
         //  navigation.navigate("CaptionNew", {updatedUserData});
             navigation.navigate('CaptionNew', {...updatedUserData});
         }
+
       });
+    }
+    catch{
+          console.log("Error in ably subscribe function");
+        } 
     };
+
   
     useEffect(() => {
       initializeLobby();
@@ -171,12 +205,12 @@ export default function WaitingRoom(){
       <Text style={styles.emptyMessage}>Waiting for other players to join</Text>
       <Text style={styles.emptyMessage}>Ably channel not working</Text>
       <Text style={styles.emptyMessage}>Channel name is "{channelName}"</Text>
-      <Text style={styles.emptyMessage}>Last acttvity is "{channel.connectionManager.lastActivity}"</Text>
+      <Text style={styles.emptyMessage}>Last activity is "{channel.connectionManager.lastActivity}"</Text>
     </>
   ) : (
     <>
     <Text style={styles.emptyMessage}>Ably channel working </Text>
-    <Text style={styles.emptyMessage}>Last acttvity is "{channel.connectionManager.lastActivity}"</Text>
+    <Text style={styles.emptyMessage}>Last activity is "{channel.connectionManager.lastActivity}"</Text>
     </>
   )}
         <FlatList
