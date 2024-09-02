@@ -27,8 +27,9 @@ import LoadingScreen from './src/components/LoadingScreen';
 import MidGameWaitingRoom from './src/components/MidGameWaitingRoom';
 import CnnDeck from './src/components/CnnDeck';
 import TransitionPage from './src/components/TransitionPage.js';
-
-
+import TransitionPage1 from './src/components/TransitionPage1.js';
+import TransitionPage2 from './src/components/TransitionPage2.js';
+import TransitionPage3 from './src/components/TransitionPage3.js';
 
 
 
@@ -65,8 +66,10 @@ export default function App() {
               <Stack.Screen name="ChooseScoring" component={ChooseScoring} />
               <Stack.Screen name="ChooseRounds" component={ChooseRounds} />
 
-              <Stack.Screen name="ChooseroundToWaitingRoom" component={TransitionPage} />
-
+              <Stack.Screen name="TransitionPage" component={TransitionPage} />
+              <Stack.Screen name="TransitionPage1" component={TransitionPage1} />
+              <Stack.Screen name="TransitionPage2" component={TransitionPage2} />
+              <Stack.Screen name="TransitionPage3" component={TransitionPage3} />
 
               <Stack.Screen name="WaitingRoom" component={WaitingRoom} />
               <Stack.Screen name="SelectDeck" component={SelectDeck} /> 

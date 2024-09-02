@@ -41,21 +41,7 @@ export default function WaitingRoom(){
       channel,
     } = useAbly(userData.gameCode);
   
-    useEffect(() => {
-      async function getDecksInfo() {
-        try{
-        const decksInfo = await getDecks(userData.playerUID);
-        setDecksInfo(decksInfo);
-      }
-      catch{
-            console.log("Error in ably getDecks function");
-    
-          } 
-      }
-      getDecksInfo();
-      console.log("Channel in WaitingRoom:", channel.connectionManager.lastActivity);
-    }, [userData.playerUID]);
-  
+
     function copyGameCodeButton() {
    //   Clipboard.setString(userData.gameCode);
       setButtonText("Copied!");
@@ -171,10 +157,22 @@ export default function WaitingRoom(){
 
   
     useEffect(() => {
+      async function getDecksInfo() {
+        try{
+        const decksInfo = await getDecks(userData.playerUID);
+        setDecksInfo(decksInfo);
+      }
+      catch{
+            console.log("Error in ably getDecks function");
+    
+          } 
+      }
+      getDecksInfo();
+      console.log("Channel in WaitingRoom:", channel.connectionManager.lastActivity);
       initializeLobby();
       return () => destroyLobby();
-    }, []);
-  
+    }, [userData.playerUID]);
+
     return (
       <View style={styles.container}>
         <TouchableOpacity

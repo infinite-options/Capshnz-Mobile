@@ -19,83 +19,17 @@ export default function ChooseroundToWaitingRoom(){
   const [decksInfo, setDecksInfo] = useState([]);
   const [channelName,setChannelName]= useState("");
 
+
+  function waitingRoomButton() {
+    navigation.navigate("TransitionPage1", {...userData });
+  }
+  
   useFocusEffect(
     React.useCallback(() => {
         navigation.setOptions({ headerShown: false });
     }, [navigation])
   );
-  
-    const {
-      publish,
-      subscribe,
-      onMemberUpdate,
-      getMembers,
-      addMember,
-      unSubscribe,
-      removeMember,
-      getChannel,
-      channel,
-    } = useAbly(userData.gameCode);
-  
-
-
-    useEffect(() => {
-      refreshLobby();
-      console.log("Channel in WaitingRoom:", channel.connectionManager.lastActivity);
-    }, []);
-
-
-
-    const refreshLobby = async () => {
-      try{
-        await onMemberUpdate(refreshLobby);
-        const channel = await getChannel();
-        setChannelName(channel);
-        console.log(channel);
-      }
-      catch{
-        console.log("Error in ably call getChannel")
-      }
-    };
-
-    function waitingRoomButton() {
-      navigation.navigate("WaitingRoom", {...userData });
-    }
-  
-  
-    async function startGameButton() {
-      try {
     
-        let imageURL = "";
-        if (userData.isApi) {
-          const imageURLs = await getApiImages(userData);
-          imageURL = await postCreateRounds(userData.gameCode, imageURLs, {
-            timeout: 60000,
-          });
-        }
-        
-        await publish({
-          data: {
-            message: "Start Game",
-            numOfPlayers: lobby.length,
-            isApi: userData.isApi,
-            deckTitle: userData.deckTitle,
-            deckUID: userData.deckUID,
-            gameUID: userData.gameUID,
-            numOfRounds: userData.numOfRounds,
-            roundTime: userData.roundTime,
-            imageURL: imageURL,
-          },
-          timeout: 60000,
-        });
-      } catch (error) {
-        handleApiError(error, startGameButton, context);
-      } finally {
-        setLoading(false);
-      }
-    }
-  
-  
     return (
 
         <View style={styles.container}>
@@ -116,15 +50,17 @@ export default function ChooseroundToWaitingRoom(){
           />
       
           <View style={styles.container}>
-          <Text style={styles.emptyMessage}>Channel name is "{channelName}"</Text>
-          <Text style={styles.emptyMessage}>Last actvity is "{channel.connectionManager.lastActivity}"</Text>
+          <Text style={styles.emptyMessage}>Hello World</Text>
+          <Text style={styles.emptyMessage}>Hello World - Page 1 Game code {userData.gameCode}</Text>
+          <Text style={styles.emptyMessage}>Hello World - Page 1 Rounds {userData.numOfRounds}</Text>
+          
           </View>
 
           <TouchableOpacity
         style={styles.button}
         onPress={waitingRoomButton}
       >
-          <Text style={styles.buttonText}>WaitingRoom</Text>
+          <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity> 
 
         </View>
