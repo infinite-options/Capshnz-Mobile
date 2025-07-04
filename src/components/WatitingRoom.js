@@ -149,14 +149,20 @@ export default function WaitingRoom(){
         keyExtractor={(item, index) => index.toString()}
         style={styles.lobbyList}
         contentContainerStyle={styles.lobbyContentContainer}
-        renderItem={({ item }) => (
-        <View style={styles.lobbyPlayer}>
-            <View style={styles.playerIcon}>
-            <Text style={styles.iconText}>⚫</Text>
+        renderItem={({ item }) => {
+          console.log("🧍 Mobile Rendering player:", item);
+          return (
+           <View style={styles.lobbyPlayer}>
+             <View style={styles.playerIcon}>
+               <Text style={styles.iconText}>⚫</Text>
             </View>
-            <Text style={styles.playerAlias}>{item.alias}</Text>
-        </View>
-        )}
+            <Text style={styles.playerAlias}>
+              {item.alias?.toString().trim() || "Unnamed Player"}
+             </Text>
+           </View>
+  );
+}}
+
     />
 
           

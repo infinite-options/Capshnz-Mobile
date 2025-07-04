@@ -47,6 +47,7 @@ export default function JoinGame() {
             gameCode,
             roundNumber: 1,
             host: false,
+            alias: userData.alias,
           };
           try {
             await joinGame(updatedUserData);

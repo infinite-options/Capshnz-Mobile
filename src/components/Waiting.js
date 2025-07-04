@@ -125,12 +125,18 @@ export default function Waiting() {
       <FlatList
         data={lobby}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item }) => {
+          console.log("🧍 Web Rendering player:", item);
+          return (
           <View style={styles.lobbyPlayer}>
-            <Text style={styles.playerIcon}>⚫</Text>
-            <Text style={styles.playerAlias}>{item.alias}</Text>
+           <Text style={styles.playerIcon}>⚫</Text>
+           <Text style={styles.playerAlias}>
+             {item.alias?.toString().trim() || "Unnamed Player"}
+           </Text>
           </View>
-        )}
+  );
+}}
+
         style={styles.lobbyList}
       />
       <Text style={styles.gameCode}>Game Code: {userData.gameCode}</Text>

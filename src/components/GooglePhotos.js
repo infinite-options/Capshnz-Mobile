@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, Image, ScrollView, Alert, StyleSheet } from 'react-native';
 import { NavigationHelpersContext, useNavigation, useRoute } from '@react-navigation/native';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GoogleLogin } from '@react-oauth/google';
-import { useGoogleLogin } from '@react-oauth/google';
+//import { GoogleOAuthProvider } from '@react-oauth/google';
+//import { GoogleLogin } from '@react-oauth/google';
+//import { useGoogleLogin } from '@react-oauth/google';
 //import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
 import axios from '../util/config';
 

@@ -105,11 +105,11 @@ async function addUser(userData) {
       }
 }
 
-async function addUserByEmail(email) {
-    // console.log("addUserByEmail: ", addUserByEmailURL)
-    // console.log("addUserByEmail Payload: ", {email})
+async function addUserByEmail(user_email) {
+     console.log("addUserByEmail: ", addUserByEmailURL)
+     console.log("addUserByEmail Payload: ", {user_email})
     const response = await axios.post(addUserByEmailURL, 
-        { email })
+        { user_email })
     console.log("addUserByEmail Response: ", response.data)
    /*     
     console.log('Add by email id');
