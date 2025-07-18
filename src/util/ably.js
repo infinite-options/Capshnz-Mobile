@@ -1,97 +1,71 @@
 import * as Ably from "ably";
-import { REACT_APP_ABLY_API_KEY } from '@env';
 
+// ✅ DIRECTLY use your API key here
+const ABLY_API_KEY = "uVw8ZQ.JeIy0w:oGVPDlf8XqW8GGYFkjpbMaxjGb7PFr0Go8xp7NMWB28";
 
-const ABLY_API_KEY = REACT_APP_ABLY_API_KEY;
-console.log("ably key: ", ABLY_API_KEY);
+let globalClient = null;
+let channel = null;
 
 const useAbly = (() => {
-  let channel = null;
-
   return (channelId) => {
-    const setChannelId = async (channelId) => {
-      const channelName = `BizBuz/${channelId}`;
-      if (!channel || channel.name !== channelName) {
-        const ablyClient = new Ably.Realtime(ABLY_API_KEY);
-        //const ablyClient = new Ably.Realtime.Promise(ABLY_API_KEY);
-        channel = ablyClient.channels.get(channelName);
-        await channel.attach();
-      }
-    };
+    const channelName = `BizBuz/${channelId}`;
+    console.log("🔌 Connecting to Ably Channel:", channelName);
 
-    if (channelId) {
-      setChannelId(channelId);
+    if (!globalClient) {
+      globalClient = new Ably.Realtime(ABLY_API_KEY); // ✅ no .Promise
+    }
+
+    if (!channel || channel.name !== channelName) {
+      channel = globalClient.channels.get(channelName);
+      channel.attach((err) => {
+        if (err) console.error("❌ Channel attach error:", err);
+        else console.log("✅ Channel attached:", channelName);
+      });
     }
 
     const publish = async (message) => {
-      console.log("in ably publish: ", message)
+      console.log("📤 Publishing:", message);
       await channel.publish(message);
-    
     };
 
-    const getMembers = async () => {
-      //console.log('ABLY KEY--',ABLY_API_KEY);
-      return await channel.presence.get();
+    const subscribe = async (listener) => {
+      console.log("📡 Subscribing to channel:", channelName);
+      await channel.subscribe((msg) => {
+        console.log("📥 Message received:", msg);
+        listener(msg);
+      });
+    };
+
+    const onMemberUpdate = async (callback) => {
+      await channel.presence.subscribe("enter", () => {
+        console.log("👤 New member entered");
+        callback();
+      });
     };
 
     const addMember = async (clientId, data) => {
+      console.log("➕ Adding presence:", clientId, data);
       await channel.presence.enterClient(clientId, data);
     };
 
     const removeMember = async (clientId) => {
+      console.log("➖ Removing presence:", clientId);
       await channel.presence.leaveClient(clientId);
     };
 
-    const onMemberUpdate = async (callback) => {
-      await channel.presence.subscribe("enter", callback);
+    const getMembers = async () => {
+      const members = await channel.presence.get();
+      console.log("👥 Current members:", members);
+      return members;
     };
-/*
-    const subscribe = async (listener) => {
-      try {
-        console.log("inside subscribe func");
-        await channel.subscribe(listener);
-        console.log("after listener ");
-      } catch (error) {
-        console.error("Error in subscribe:", error);
-      } 
-    };
-*/
-
-const subscribe = async (listener) => {
-  try {
-    // console.log("inside subscribe func",channel.state);
-    if (channel.state !== 'attached') {
-      // console.log("attaching channel...");
-      await channel.attach();
-      // console.log("channel attached");
-    }
-    // console.log("subscribing to channel...");
-    const subscribePromise = channel.subscribe(listener);
-    
-    // Add a timeout for subscription
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error("Subscription timed out")), 10000)
-    );
-
-    await Promise.race([subscribePromise, timeoutPromise]);
-    // console.log("after listener");
-  } catch (error) {
-    console.error("Error in subscribe:", error);
-  }
-};
 
     const unSubscribe = () => {
+      console.log("🛑 Unsubscribing...");
       channel.presence.unsubscribe();
       channel.unsubscribe();
     };
 
-    const detach = async () => {
-      await channel.detach();
-      await channel.release();
-    };
-
     return {
-      setChannelId,
       publish,
       subscribe,
       addMember,
@@ -99,7 +73,6 @@ const subscribe = async (listener) => {
       getMembers,
       onMemberUpdate,
       unSubscribe,
-      detach,
     };
   };
 })();

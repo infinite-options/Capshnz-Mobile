@@ -59,12 +59,12 @@ export default function VerificationOtp() {
           source={require('../assets/polygon-downwards-white.svg')}
           style={styles.downwardPolygon}
       />
-      <Text style={styles.header}>Welcome to Capshnz!</Text>
+      <TextInput style={styles.header} editable={false}>Welcome to Capshnz!</TextInput>
       <Image
           source={require('../assets/polygon-downwards-white.svg')}
           style={styles.downwardPolygon}
       />
-      <Text style={styles.codeInputLabel}>Enter 3 digit code</Text>
+      <TextInput style={styles.codeInputLabel}  editable={false}>Enter 3 digit code</TextInput>
         <TextInput
           style={[styles.input, !valid && styles.inputInvalid]}
           value={code}

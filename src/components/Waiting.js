@@ -15,8 +15,6 @@ import {
 } from 'react-native';
 import { handleApiError } from '../util/ApiHelper';
 import { ErrorContext } from '../../App';
-import { Platform } from 'react-native';
-
 
 export default function Waiting() {
   const navigation = useNavigation();
@@ -31,7 +29,7 @@ export default function Waiting() {
     addMember,
     unSubscribe,
     removeMember,
-  }  = Platform.OS !== 'web' ? useAbly(userData.gameCode) : {};
+  } = useAbly(userData.gameCode);
   const [buttonText, setButtonText] = useState('Share with other players');
   const [lobby, setLobby] = useState([]);
   const [isLoading, setLoading] = useState(false);

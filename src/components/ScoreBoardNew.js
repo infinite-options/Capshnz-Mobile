@@ -283,7 +283,7 @@ useEffect(() => {
         style={styles.downwardPolygon}
     />
        
-    <Text style={styles.input}>ScoreBoard!</Text>
+    <TextInput style={styles.input} editable={false}>ScoreBoard!</TextInput>
 
        {/* <Polygon width={24} height={24} /> */}
       </View>
@@ -333,7 +333,7 @@ useEffect(() => {
             <Text style={styles.buttonText}>Next Round</Text>
           </TouchableOpacity>
         )}
-        <Text style={styles.input}>{userData.deckTitle}</Text>
+        <TextInput style={styles.input} editable={false}>{userData.deckTitle}</TextInput>
        
  
         {userData.host && userData.roundNumber === userData.numOfRounds && (
