@@ -83,7 +83,7 @@ export default function ScoreBoardNew() {
     return () => {
       unSubscribe();
     };
-  }, [subscribe, unSubscribe]);
+  }, []);
 
   useEffect(() => {
     subscribe((event) => {
@@ -185,6 +185,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 0,
     marginBottom: -10,
+    width: "100%",               // ✅ allow title to center
+    paddingHorizontal: 20,
   },
   imageContainer: {
     width: 340,
@@ -232,16 +234,18 @@ const styles = StyleSheet.create({
     fontFamily: "Grandstander",
   },
   input: {
-    width: "80%",
-    height: 60,
+    width: "auto",
+    maxWidth: "100%",
     backgroundColor: "white",
     borderRadius: 40,
     fontSize: 26,
     fontFamily: "Grandstander",
     fontWeight: "500",
     textAlign: "center",
-    marginVertical: 10,
     paddingHorizontal: 20,
+    paddingVertical: 10,
+    flexWrap: "nowrap",
+    alignSelf: "center",
   },
   buttonContainer: {
     width: 300,
@@ -264,4 +268,3 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
-

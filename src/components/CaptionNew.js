@@ -78,7 +78,6 @@ const CaptionNew = () => {
       }
     } catch (error) {
       console.error("Error submitting caption:", error);
-      // optionally call: handleApiError(error, () => submitButton(timerComplete), context);
     }
   }
 
@@ -90,7 +89,7 @@ const CaptionNew = () => {
     });
 
     return () => {
-      unSubscribe(); // ✅ correct cleanup
+      unSubscribe();
     };
   }, []);
 
@@ -116,7 +115,9 @@ const CaptionNew = () => {
         >
           {({ remainingTime }) => {
             setItem("remaining-time", remainingTime);
-            return <Text>{remainingTime}</Text>;
+            return (
+              <Text style={styles.timerText}>{remainingTime}</Text>
+            );
           }}
         </CountdownCircleTimer>
       </View>
@@ -159,6 +160,8 @@ const CaptionNew = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
     backgroundColor: '#7580B5D9',
   },
@@ -172,6 +175,11 @@ const styles = StyleSheet.create({
   timerContainer: {
     marginBottom: 20,
     alignItems: "center",
+  },
+  timerText: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#000",
   },
   imageContainer: {
     alignItems: 'center',
@@ -214,7 +222,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    width: "80%",
     alignItems: "center",
     justifyContent: 'center',
   },
