@@ -2,21 +2,13 @@ import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import { View, Text, Image, TouchableOpacity, Button, Alert, StyleSheet, Dimensions, AppState } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-//import { useCookies } from 'react-cookie';
-
 import { getSubmittedCaptions, postVote, sendError, getScoreBoard } from '../util/Api';
 import useAbly from '../util/ably';
 import { ErrorContext } from "../../App";
 import LoadingScreen from './LoadingScreen';
 import { handleApiError } from '../util/ApiHelper';
-import Axios from 'axios';
-import { getCurrentRound } from "../util/Api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import { Worker } from 'react-native-workers';
 
-
-
-// This function is made to shuffle the sequence of the captions array.
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -26,14 +18,10 @@ function shuffleArray(array) {
 }
 
 export default function VoteImage() {
-
-  console.log("VoteImage Page");
- 
   const navigation = useNavigation();
   const [appState, setAppState] = useState(AppState.currentState);
   const route = useRoute();
   const [userData, setUserData] = useState(route.params);
-  //const [cookies, setCookie] = setCookie(['userData']);
   const { publish, subscribe, unSubscribe, detach } = useAbly(userData.gameCode);
 
   const [captions, setCaptions] = useState([]);
@@ -46,59 +34,34 @@ export default function VoteImage() {
   const [timeRemaining, setTimeRemaining] = useState(userData.roundTime || 60);
   const [loadSpinner, setLoadSpinner] = useState(false);
   const [loadingImg, setLoadingImg] = useState(true);
-  
-  
-  //const webWorker  = new Worker(new URL('../workers/api-worker.js', import.meta.url))
-  
 
-  
-
-  // console.log("Vote Image Page - roundNumber", roundNumber)
-  // console.log("Vote Image Page - midGameTimeStamp", midGameTimeStamp)
-  // console.log("Vote Image Page - imageURL", imageURL)
-  console.log("Vote Image Page - userData", userData)
-
-
-  
   const backgroundColors = {
     default: '#D4B551',
-    selected: 'Green',
-    myCaption: 'black',
+    selected: 'green',
+    myCaption: '#888888',
   };
-  
+
   const isGameEnded = useRef(false);
   const isCaptionSubmitted = useRef(false);
   const context = useContext(ErrorContext);
-
   const shuffledCaptions = useMemo(() => shuffleArray(captions), [captions]);
-/*
-  if (cookies.userData != undefined //&& cookies.userData.imageURL !== userData.imageURL
-    ) {
-    async function sendingError() {
-      let code1 = 'Vote Page';
-      let code2 = 'userData.imageURL does not match cookies.userData.imageURL';
-      await sendError(code1, code2);
+
+  const setItem = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error('Error setting item:', error);
     }
-    // sendingError()
-  }
-*/
+  };
 
-const setItem = async (key, value) => {
-  try {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
-  } catch (error) {
-    console.error('Error setting item:', error);
-  }
-};
-
-const getItem = async (key) => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    return value != null ? JSON.parse(value) : null;
-  } catch (error) {
-    console.error('Error getting item:', error);
-  }
-};
+  const getItem = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      return value != null ? JSON.parse(value) : null;
+    } catch (error) {
+      console.error('Error getting item:', error);
+    }
+  };
 
   async function scoreBoard() {
     const scoreboard = await getScoreBoard(userData);
@@ -126,12 +89,8 @@ const getItem = async (key) => {
     setCaptions(tempCaptions);
     setToggles(tempToggles);
     setIsMyCaption(myCaption);
-    const updatedUserData = { ...userData, captions: submittedCaptions };
-   // setCookie('userData', updatedUserData, { path: '/' });
-   console.log('Vote image line 129- setSubmittedCaptions ',updatedUserData);
-   console.log('before skip vote');
+
     if (tempCaptions.length <= 1) {
-      console.log('if skip vote');
       await skipVote(tempCaptions, onlyCaptionSubmitted, myCaption);
     }
   }
@@ -144,24 +103,12 @@ const getItem = async (key) => {
     } else if (tempCaptions.length === 0) {
       await postVote(null, userData);
     }
-   // setCookie('userData', userData, { path: '/' });
-   console.log('In VoteImage going to ScoreBoard 1',userData);
-   navigation.navigate('ScoreBoardNew', {...userData });
-   /*
-    navigation.navigate({
-      name: "ScoreboardNew",
-      params: {...userData},
-      key: 'ScoreboardNew-${Date.now()}', // Use a unique key
-    });
-    */
+    navigation.navigate('ScoreBoardNew', { ...userData });
   }
 
   useEffect(() => {
-    if (captions.length === 0 //&& cookies.userData.captions != undefined
-        ) {
+    if (captions.length === 0) {
       setLoadingImg(false);
-     // setSubmittedCaptions(cookies.userData.captions);
-      isCaptionSubmitted.current = true;
     }
 
     if (userData.host) {
@@ -170,7 +117,7 @@ const getItem = async (key) => {
         await publish({
           data: {
             message: 'Set Vote',
-            submittedCaptions: submittedCaptions,
+            submittedCaptions,
             roundNumber: userData.roundNumber,
             imageURL: userData.imageURL,
           },
@@ -185,66 +132,33 @@ const getItem = async (key) => {
         setLoadingImg(false);
         setSubmittedCaptions(event.data.submittedCaptions);
       } else if (event.data.message === 'Start ScoreBoard') {
-        handleNavigate() ;
+        handleNavigate();
       }
     });
   }, [userData]);
 
   const handleNavigate = async () => {
-    console.log("handleNavigate");
-  //  setCookie('userData', userData, { path: '/' });
-    console.log(AppState.currentState);
-    if(AppState.currentState === "active" && !userData.host ){
-      //setItem("isOutofSync", true)
+    if (AppState.currentState === 'active' && !userData.host) {
       await AsyncStorage.setItem('isOutOfSync', 'true');
-    }  
-    //setItem("isOutofSync", false);
-       //let isDeSync = getItem('isOutOfSync');
+    }
     await AsyncStorage.setItem('isOutOfSync', 'false');
 
- 
-    
     const isDeSync = await getItem('isOutOfSync');
-
-    console.log(' Waiting Room -isDeSync',isDeSync);
 
     if (!isDeSync) {
       setItem('votepage-minimize-time', 0);
       setItem('remaining-time-votePage', 0);
-      console.log('In Vote Image going to ScoreBoard 2',userData);
-    
-     navigation.navigate('ScoreBoardNew', {...userData });
-     /*
-      navigation.navigate({
-        name: "ScoreboardNew",
-        params: {...userData},
-        key: 'ScoreboardNew-${Date.now()}', // Use a unique key
-      });
-      */
-     
-    } else {
-      if (!userData.host) {
-        console.log("if statement going to mid game waiting room")
-        setLoadSpinner(true);
-       // setItem('isOutOfSync', false);
-       await AsyncStorage.setItem('isOutOfSync', 'false');
-        setTimeout(() => {
-          // navigation.nagivate('MidGameWaitingRoom', {...userData });
-           navigation.navigae('MidGameWaitingRoom', {...userData});
-           /*
-           navigation.navigate({
-            name: "MidGameWaitingRoom",
-            params: {...userData},
-            key: 'MidGameWaitingRoom-${Date.now()}', // Use a unique key
-            
-          }); */
-        }, 2000); 
-      }
+      navigation.navigate('ScoreBoardNew', { ...userData });
+    } else if (!userData.host) {
+      setLoadSpinner(true);
+      await AsyncStorage.setItem('isOutOfSync', 'false');
+      setTimeout(() => {
+        navigation.navigate('MidGameWaitingRoom', { ...userData });
+      }, 2000);
     }
   };
 
   useEffect(() => {
-   // localStorage.removeItem('user-caption');
     subscribe((event) => {
       if (event.data.message === 'EndGame vote') {
         detach();
@@ -254,8 +168,7 @@ const getItem = async (key) => {
         }
         const updatedUserData = { ...userData, scoreBoard: event.data.scoreBoard };
         setUserData(updatedUserData);
-     //   setCookie('userData', updatedUserData, { path: '/' });
-        navigation.navigate('FinalScore', {...updatedUserData });
+        navigation.navigate('FinalScore', { ...updatedUserData });
       }
     });
   }, []);
@@ -273,7 +186,6 @@ const getItem = async (key) => {
         isCaptionSubmitted.current = true;
       }
     }, 5000);
-
     return () => {
       clearInterval(interval);
       unSubscribe();
@@ -282,18 +194,12 @@ const getItem = async (key) => {
 
   useEffect(() => {
     const handleAppStateChange = async (nextAppState) => {
-      console.log('nextAppState',nextAppState);
       if (nextAppState.match(/inactive|background/)) {
-        // App is in background
         setTimeRemaining(timeRemaining);
         setItem('votepage-minimize-time', new Date().getTime().toString());
         setItem('remaining-time-votePage', remainingTime.toString());
-     //   webWorker.postMessage(["vote-page", userData, remainingTime,null]);
         setPageVisibility(false);
       } else {
-        // App is in foreground
-       // webWorker.postMessage("exit");
-       // setItem('isOutOfSync', 'false');
         await AsyncStorage.setItem('isOutOfSync', 'false');
         const minimizeTime = parseInt(getItem('votepage-minimize-time'), 10);
         const currentTime = new Date().getTime();
@@ -305,38 +211,30 @@ const getItem = async (key) => {
     };
 
     const subscription = AppState.addEventListener('change', handleAppStateChange);
-
-    return () => {
-        //AppState.removeEventListener('change', handleAppStateChange);
-        subscription.remove();
-    };
+    return () => subscription.remove();
   }, [timeRemaining, remainingTime]);
 
-
-  async function closeButton() {
+  async function voteButton(selectedCaptionIndex) {
     try {
-      let scoreboard = userData.scoreBoardEnd;
-      if (scoreboard === undefined) {
-        scoreboard = await scoreBoard();
-        for (let i = 0; i < scoreboard.length; i++) {
-          scoreboard[i].game_score = 0;
+      let selectedCaption = null;
+      if (selectedCaptionIndex > -1) {
+        selectedCaption = captions[selectedCaptionIndex];
+      }
+      const numOfPlayersVoting = await postVote(selectedCaption, userData);
+      if (numOfPlayersVoting === 0 || selectedCaptionIndex === -1) {
+        const publishTimer = numOfPlayersVoting !== 0 ? 5000 : 0;
+        if (userData.host || numOfPlayersVoting === 0 || selectedCaptionIndex === -1) {
+          setTimeout(async () => {
+            await publish({ data: { message: "Start ScoreBoard", roundNumber: userData.roundNumber } });
+          }, publishTimer);
         }
       }
-      await publish({
-        data: {
-          message: 'EndGame vote',
-          scoreBoard: scoreboard,
-        },
-      });
     } catch (error) {
-      handleApiError(error, closeButton, context);
+      handleApiError(error, voteButton, context);
     }
   }
 
   function updateToggles(index) {
-    console.log("Index ",index);
-    console.log(captions[index] );
-    console.log(isMyCaption);
     if (captions[index] === isMyCaption) {
       Alert.alert('You cannot vote for your own caption');
       return;
@@ -347,52 +245,8 @@ const getItem = async (key) => {
     voteButton(index);
   }
 
-  async function voteButton(selectedCaptionIndex) {
-    try {
-
-        console.log("inside VoteButton");
-        let numOfPlayersVoting = -1;
-        setVoteSubmitted(true);
-
-        let selectedCaption = null;
-        if(selectedCaptionIndex > -1){
-          selectedCaption = captions[selectedCaptionIndex];
-        }
-
-        numOfPlayersVoting = await postVote(selectedCaption, userData);
-
-        console.log("afer postvote in  VoteButton functin");
-        console.log('numOfPlayersVoting ',numOfPlayersVoting);
-        console.log('selectedCaptionIndex ',selectedCaptionIndex);
-        
-        if (numOfPlayersVoting === 0 || selectedCaptionIndex == -1) {
-          let publishTimer = 0;
-          if(numOfPlayersVoting != 0)  publishTimer = 5000;
-          function timeout() {
-            console.log("inside timeout function"); 
-            setTimeout(async () => {
-            await publish({ data: { message: "Start ScoreBoard", roundNumber: userData.roundNumber } });
-        } , publishTimer); // 5000 milliseconds = 5 seconds
-
-        console.log("after timeout function"); 
-      }
-      console.log("here line 436 numOfPlayersVoting : ",numOfPlayersVoting )
-      if(userData.host || numOfPlayersVoting === 0 || selectedCaptionIndex === -1) 
-        timeout();
-      }
-    } catch (error) {
-      handleApiError(error, voteButton, context);
-    }
-  }
-
-  function getBackgroundColor(status) {
-    return backgroundColors[status];
-  }
-
-  console.log("Vote Image",userData);
   return (
     <View style={styles.container}>
-      
       {loadSpinner && <LoadingScreen />}
       {loadingImg ? (
         <View style={styles.loadingContainer}>
@@ -400,7 +254,9 @@ const getItem = async (key) => {
         </View>
       ) : (
         <View style={styles.contentContainer}>
-          <Image style={styles.image} source={{ uri: userData.imageURL }} />
+          <Image
+           style={styles.image} 
+           source={{ uri: userData.imageURL }} />
           <CountdownCircleTimer
             size={76}
             strokeWidth={5}
@@ -412,27 +268,34 @@ const getItem = async (key) => {
           >
             {({ remainingTime }) => <Text style={styles.timerText}>{remainingTime}s</Text>}
           </CountdownCircleTimer>
-          {shuffledCaptions.map((caption, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => updateToggles(index)}
-              style={[
-                styles.captionContainer,
-                { backgroundColor: toggles[index] ? backgroundColors.selected : backgroundColors.default }
-              ]}
-            >
-              <Text style={styles.captionText}>{caption}</Text>
-            </TouchableOpacity>
-          ))}
-          {/*
-          <View style={styles.buttonContainer}>
-            <Button title="Submit Vote" onPress={closeButton} disabled={!voteSubmitted} />
-            </View> */}
+          {shuffledCaptions.map((caption, index) => {
+            const isOwnCaption = caption === isMyCaption;
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => !isOwnCaption && updateToggles(index)}
+                style={[
+                  styles.captionContainer,
+                  {
+                    backgroundColor: isOwnCaption
+                      ? backgroundColors.myCaption
+                      : toggles[index]
+                      ? backgroundColors.selected
+                      : backgroundColors.default,
+                    opacity: isOwnCaption ? 0.5 : 1,
+                  },
+                ]}
+                disabled={isOwnCaption}
+              >
+                <Text style={[styles.captionText, isOwnCaption && styles.disabledText]}>{caption}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -470,14 +333,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-  buttonContainer: {
-    marginTop: 20,
-  },
   timerText: {
     fontSize: 22,
     color: '#fff',
   },
+  disabledText: {
+    color: '#aaa',
+    fontStyle: 'italic',
+  },
 });
-
-
-
