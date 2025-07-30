@@ -1,38 +1,22 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  AppState,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, Image, TextInput, TouchableOpacity, AppState, StyleSheet, ActivityIndicator, Dimensions } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import useAbly from "../util/ably";
 import { ErrorContext } from "../../App";
-import {
-  submitCaption,
-  sendError,
-  getScoreBoard,
-  getSubmittedCaptions,
-  getGameImageForRound,
-} from "../util/Api";
+import { submitCaption, sendError, getScoreBoard, getSubmittedCaptions, getGameImageForRound } from "../util/Api";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import LoadingScreen from "./LoadingScreen";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CaptionNew = () => {
+export default function CaptionNew() {
   const navigation = useNavigation();
   const route = useRoute();
   const [userData, setUserData] = useState(route.params);
   const { publish, subscribe, unSubscribe } = useAbly(userData.gameCode);
+
   const [caption, setCaption] = useState("");
   const [captionSubmitted, setCaptionSubmitted] = useState(false);
-  const context = useContext(ErrorContext);
   const [inputCaption, setInputCaption] = useState("");
-  const [isPageVisible, setPageVisibility] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState(userData.roundTime || 60);
   const [loadSpinner, setLoadSpinner] = useState(false);
 
@@ -43,7 +27,7 @@ const CaptionNew = () => {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error('Error setting item:', error);
+      console.error("Error setting item:", error);
     }
   };
 
@@ -51,7 +35,7 @@ const CaptionNew = () => {
     setItem("user-caption", text);
     setCaption(text);
     setInputCaption(text);
-    console.log('Caption updated:', text);
+    console.log("Caption updated:", text);
   }
 
   async function submitButton(timerComplete) {
@@ -66,15 +50,18 @@ const CaptionNew = () => {
       const result = await submitCaption(caption, userData);
 
       if (timerComplete || result === 0) {
-        setTimeout(async () => {
-          await publish({
-            data: {
-              message: "Start Vote",
-              roundNumber: userData.roundNumber,
-              imageURL: userData.imageURL,
-            },
-          });
-        }, result === 0 ? 0 : 5000);
+        setTimeout(
+          async () => {
+            await publish({
+              data: {
+                message: "Start Vote",
+                roundNumber: userData.roundNumber,
+                imageURL: userData.imageURL,
+              },
+            });
+          },
+          result === 0 ? 0 : 5000
+        );
       }
     } catch (error) {
       console.error("Error submitting caption:", error);
@@ -95,67 +82,36 @@ const CaptionNew = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: userData.imageURL }}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      </View>
+      <View style={styles.contentContainer}>
+        <Image source={{ uri: userData.imageURL }} style={styles.image} resizeMode='contain' />
 
-      <View style={styles.timerContainer}>
-        <CountdownCircleTimer
-          size={76}
-          strokeWidth={5}
-          isPlaying={isPageVisible}
-          duration={timeRemaining}
-          colors="#000000"
-          background="#566176"
-          onComplete={() => submitButton(true)}
-        >
-          {({ remainingTime }) => {
-            setItem("remaining-time", remainingTime);
-            return (
-              <Text style={styles.timerText}>{remainingTime}</Text>
-            );
-          }}
-        </CountdownCircleTimer>
-      </View>
+        <View style={styles.timerContainer}>
+          <CountdownCircleTimer size={76} strokeWidth={5} isPlaying={true} duration={timeRemaining} colors='#000000' background='#566176' onComplete={() => submitButton(true)}>
+            {({ remainingTime }) => {
+              setItem("remaining-time", remainingTime);
+              return <Text style={styles.timerText}>{remainingTime}s</Text>;
+            }}
+          </CountdownCircleTimer>
+        </View>
 
-      <TextInput
-        style={styles.captionInput}
-        value={inputCaption}
-        onChangeText={handleChange}
-        ref={captionInputRef}
-        placeholder="Enter your caption here"
-      />
+        <TextInput style={styles.captionInput} value={inputCaption} onChangeText={handleChange} ref={captionInputRef} placeholder='Enter your caption here' />
 
-      {loadSpinner && (
-        <ActivityIndicator size="large" color="#0000ff" />
-      )}
+        {loadSpinner && <ActivityIndicator size='large' color='#0000ff' />}
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, captionSubmitted ? styles.buttonDisabled : null]}
-          onPress={() => submitButton(false)}
-          disabled={captionSubmitted}
-        >
-          <Text style={styles.buttonText}>
-            {captionSubmitted ? "Submit" : "Submit"}
-          </Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={[styles.button, captionSubmitted ? styles.buttonDisabled : null]} onPress={() => submitButton(false)} disabled={captionSubmitted}>
+            <Text style={styles.buttonText}>{captionSubmitted ? "Submit" : "Submit"}</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.centered}>
-        <Image
-          source={require('../assets/polygon-upward-white.png')}
-          style={styles.upwardPolygonLeft}
-        />
-        <Text style={styles.input}>{userData.deckTitle}</Text>
+        <View style={styles.centered}>
+          <Image source={require("../assets/polygon-upward-white.png")} style={styles.upwardPolygonLeft} />
+          <Text style={styles.input}>{userData.deckTitle}</Text>
+        </View>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -163,14 +119,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: '#7580B5D9',
+    backgroundColor: "#7580B5D9",
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: Dimensions.get("window").width * 0.9,
   },
   centered: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
   timerContainer: {
     marginBottom: 20,
@@ -181,26 +143,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000",
   },
-  imageContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
-    resizeMode: 'contain',
+    marginBottom: 20,
+    resizeMode: "contain",
   },
   captionInput: {
-    width: '90%',
+    width: "90%",
     height: 55,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 40,
-    color: 'black',
+    color: "black",
     fontSize: 26,
-    fontFamily: 'Grandstander',
-    fontWeight: '500',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    fontFamily: "Grandstander",
+    fontWeight: "500",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   button: {
     width: 200,
@@ -218,19 +177,19 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   buttonDisabled: {
-    backgroundColor: '#6c757d',
+    backgroundColor: "#6c757d",
   },
   buttonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   input: {
-    width: '90%',
+    width: "90%",
     height: 55,
     fontSize: 24,
-    textAlign: 'center',
-    backgroundColor: '#fff',
+    textAlign: "center",
+    backgroundColor: "#fff",
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -244,5 +203,3 @@ const styles = StyleSheet.create({
     bottom: -30,
   },
 });
-
-export default CaptionNew;

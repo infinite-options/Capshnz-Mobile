@@ -4,15 +4,7 @@ import { handleApiError } from "../util/ApiHelper";
 import { ErrorContext } from "../../App";
 import useAbly from "../util/ably";
 import { getApiImages, postCreateRounds, getDecks } from "../util/Api";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-  Clipboard,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList, Clipboard } from "react-native";
 
 export default function WaitingRoom() {
   const navigation = useNavigation();
@@ -24,15 +16,7 @@ export default function WaitingRoom() {
   const context = useContext(ErrorContext);
   const [decksInfo, setDecksInfo] = useState([]);
 
-  const {
-    publish,
-    subscribe,
-    onMemberUpdate,
-    getMembers,
-    addMember,
-    unSubscribe,
-    removeMember,
-  } = useAbly(userData.gameCode);
+  const { publish, subscribe, onMemberUpdate, getMembers, addMember, unSubscribe, removeMember } = useAbly(userData.gameCode);
 
   useEffect(() => {
     async function getDecksInfo() {
@@ -145,10 +129,7 @@ export default function WaitingRoom() {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../assets/Polygon 1.svg")}
-        style={styles.downwardPolygon}
-      />
+      <Image source={require("../assets/Polygon 1.svg")} style={styles.downwardPolygon} />
 
       <Text style={styles.input}>Waiting for all Players . . .</Text>
 
@@ -173,13 +154,10 @@ export default function WaitingRoom() {
             <TouchableOpacity onPress={selectDeckButton} style={styles.deck}>
               <Image
                 source={{
-                  uri:
-                    userData.deckTitle === "Google Photos"
-                      ? "https://openaccess-cdn.clevelandart.org/1964.351/1964.351_web.jpg"
-                      : userData.deckThumbnail_url,
+                  uri: userData.deckTitle === "Google Photos" ? "https://openaccess-cdn.clevelandart.org/1964.351/1964.351_web.jpg" : userData.deckThumbnail_url,
                 }}
                 style={styles.deckImage}
-                resizeMode="contain"
+                resizeMode='contain'
               />
               <Text style={styles.deckText}>{userData.deckTitle}</Text>
             </TouchableOpacity>
