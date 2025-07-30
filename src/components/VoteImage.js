@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
-import { View, Text, Image, TouchableOpacity, Button, Alert, StyleSheet, Dimensions, AppState } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert, StyleSheet, Dimensions, AppState } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-import { getSubmittedCaptions, postVote, sendError, getScoreBoard } from '../util/Api';
+import { getSubmittedCaptions, postVote, getScoreBoard } from '../util/Api';
 import useAbly from '../util/ably';
 import { ErrorContext } from "../../App";
 import LoadingScreen from './LoadingScreen';
@@ -28,19 +28,9 @@ export default function VoteImage() {
   const [toggles, setToggles] = useState([]);
   const [isMyCaption, setIsMyCaption] = useState('');
   const [voteSubmitted, setVoteSubmitted] = useState(false);
-  const [votedCaption, setVotedCaption] = useState(-1);
-  const [remainingTime, setRemainingTime] = useState(10);
-  const [isPageVisible, setPageVisibility] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState(userData.roundTime || 60);
   const [loadSpinner, setLoadSpinner] = useState(false);
   const [loadingImg, setLoadingImg] = useState(true);
-
-  const backgroundColors = {
-    default: '#D4B551',
-    selected: 'green',
-    myCaption: '#888888',
-  };
-
   const isGameEnded = useRef(false);
   const isCaptionSubmitted = useRef(false);
   const context = useContext(ErrorContext);
@@ -63,15 +53,8 @@ export default function VoteImage() {
     }
   };
 
-  async function scoreBoard() {
-    const scoreboard = await getScoreBoard(userData);
-    scoreboard.sort((a, b) => b.game_score - a.game_score);
-    return scoreboard;
-  }
-
   async function setSubmittedCaptions(submittedCaptions) {
     let tempCaptions = [];
-    let tempToggles = [];
     let myCaption = '';
     let onlyCaptionSubmitted = '';
 
@@ -82,12 +65,8 @@ export default function VoteImage() {
       tempCaptions.push(submittedCaptions[i].caption);
     }
 
-    for (let i = 0; i < tempCaptions.length; i++) {
-      tempToggles.push(false);
-    }
-
     setCaptions(tempCaptions);
-    setToggles(tempToggles);
+    setToggles(new Array(tempCaptions.length).fill(false));
     setIsMyCaption(myCaption);
 
     if (tempCaptions.length <= 1) {
@@ -112,7 +91,7 @@ export default function VoteImage() {
     }
 
     if (userData.host) {
-      async function getCaptions() {
+      (async () => {
         const submittedCaptions = await getSubmittedCaptions(userData);
         await publish({
           data: {
@@ -122,8 +101,7 @@ export default function VoteImage() {
             imageURL: userData.imageURL,
           },
         });
-      }
-      getCaptions();
+      })();
     }
 
     subscribe((event) => {
@@ -138,23 +116,20 @@ export default function VoteImage() {
   }, [userData]);
 
   const handleNavigate = async () => {
-    if (AppState.currentState === 'active' && !userData.host) {
-      await AsyncStorage.setItem('isOutOfSync', 'true');
-    }
     await AsyncStorage.setItem('isOutOfSync', 'false');
-
     const isDeSync = await getItem('isOutOfSync');
-
     if (!isDeSync) {
       setItem('votepage-minimize-time', 0);
       setItem('remaining-time-votePage', 0);
       navigation.navigate('ScoreBoardNew', { ...userData });
-    } else if (!userData.host) {
-      setLoadSpinner(true);
-      await AsyncStorage.setItem('isOutOfSync', 'false');
-      setTimeout(() => {
-        navigation.navigate('MidGameWaitingRoom', { ...userData });
-      }, 2000);
+    } else {
+      if (!userData.host) {
+        setLoadSpinner(true);
+        await AsyncStorage.setItem('isOutOfSync', 'false');
+        setTimeout(() => {
+          navigation.navigate('MidGameWaitingRoom', { ...userData });
+        }, 2000);
+      }
     }
   };
 
@@ -173,19 +148,18 @@ export default function VoteImage() {
     });
   }, []);
 
-  async function getCaptionsForUser() {
-    const submittedCaptions = await getSubmittedCaptions(userData);
-    setLoadingImg(false);
-    setSubmittedCaptions(submittedCaptions);
-  }
-
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isCaptionSubmitted.current) {
-        getCaptionsForUser();
+        (async () => {
+          const submittedCaptions = await getSubmittedCaptions(userData);
+          setLoadingImg(false);
+          setSubmittedCaptions(submittedCaptions);
+        })();
         isCaptionSubmitted.current = true;
       }
     }, 5000);
+
     return () => {
       clearInterval(interval);
       unSubscribe();
@@ -195,39 +169,31 @@ export default function VoteImage() {
   useEffect(() => {
     const handleAppStateChange = async (nextAppState) => {
       if (nextAppState.match(/inactive|background/)) {
-        setTimeRemaining(timeRemaining);
         setItem('votepage-minimize-time', new Date().getTime().toString());
-        setItem('remaining-time-votePage', remainingTime.toString());
-        setPageVisibility(false);
+        setItem('remaining-time-votePage', timeRemaining.toString());
       } else {
         await AsyncStorage.setItem('isOutOfSync', 'false');
-        const minimizeTime = parseInt(getItem('votepage-minimize-time'), 10);
-        const currentTime = new Date().getTime();
-        const diff = Math.floor((currentTime - minimizeTime) / 1000);
-        setTimeRemaining(timeRemaining - diff);
-        setPageVisibility(true);
+        const minimizeTime = parseInt(await getItem('votepage-minimize-time'), 10);
+        const diff = Math.floor((Date.now() - minimizeTime) / 1000);
+        setTimeRemaining((prev) => Math.max(prev - diff, 0));
       }
       setAppState(nextAppState);
     };
 
     const subscription = AppState.addEventListener('change', handleAppStateChange);
     return () => subscription.remove();
-  }, [timeRemaining, remainingTime]);
+  }, [timeRemaining]);
 
   async function voteButton(selectedCaptionIndex) {
     try {
-      let selectedCaption = null;
-      if (selectedCaptionIndex > -1) {
-        selectedCaption = captions[selectedCaptionIndex];
-      }
+      setVoteSubmitted(true);
+      const selectedCaption = selectedCaptionIndex > -1 ? captions[selectedCaptionIndex] : null;
       const numOfPlayersVoting = await postVote(selectedCaption, userData);
+
       if (numOfPlayersVoting === 0 || selectedCaptionIndex === -1) {
-        const publishTimer = numOfPlayersVoting !== 0 ? 5000 : 0;
-        if (userData.host || numOfPlayersVoting === 0 || selectedCaptionIndex === -1) {
-          setTimeout(async () => {
-            await publish({ data: { message: "Start ScoreBoard", roundNumber: userData.roundNumber } });
-          }, publishTimer);
-        }
+        setTimeout(async () => {
+          await publish({ data: { message: "Start ScoreBoard", roundNumber: userData.roundNumber } });
+        }, numOfPlayersVoting !== 0 ? 5000 : 0);
       }
     } catch (error) {
       handleApiError(error, voteButton, context);
@@ -239,11 +205,16 @@ export default function VoteImage() {
       Alert.alert('You cannot vote for your own caption');
       return;
     }
-    const updatedToggles = toggles.map((toggle, i) => (i === index ? !toggle : toggle));
-    setToggles(updatedToggles);
+    setToggles(toggles.map((t, i) => (i === index ? !t : false)));
     setVoteSubmitted(true);
     voteButton(index);
   }
+
+  const backgroundColors = {
+    default: '#D4B551',
+    selected: 'green',
+    disabled: '#ccc',
+  };
 
   return (
     <View style={styles.container}>
@@ -254,9 +225,7 @@ export default function VoteImage() {
         </View>
       ) : (
         <View style={styles.contentContainer}>
-          <Image
-           style={styles.image} 
-           source={{ uri: userData.imageURL }} />
+          <Image style={styles.image} source={{ uri: userData.imageURL }} />
           <CountdownCircleTimer
             size={76}
             strokeWidth={5}
@@ -268,26 +237,33 @@ export default function VoteImage() {
           >
             {({ remainingTime }) => <Text style={styles.timerText}>{remainingTime}s</Text>}
           </CountdownCircleTimer>
+
           {shuffledCaptions.map((caption, index) => {
             const isOwnCaption = caption === isMyCaption;
             return (
               <TouchableOpacity
                 key={index}
-                onPress={() => !isOwnCaption && updateToggles(index)}
+                onPress={() => updateToggles(index)}
+                disabled={isOwnCaption}
                 style={[
                   styles.captionContainer,
                   {
                     backgroundColor: isOwnCaption
-                      ? backgroundColors.myCaption
+                      ? backgroundColors.disabled
                       : toggles[index]
                       ? backgroundColors.selected
-                      : backgroundColors.default,
-                    opacity: isOwnCaption ? 0.5 : 1,
-                  },
+                      : backgroundColors.default
+                  }
                 ]}
-                disabled={isOwnCaption}
               >
-                <Text style={[styles.captionText, isOwnCaption && styles.disabledText]}>{caption}</Text>
+                <Text
+                  style={[
+                    styles.captionText,
+                    isOwnCaption && styles.disabledCaptionText
+                  ]}
+                >
+                  {caption}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -300,9 +276,10 @@ export default function VoteImage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#aab6f5',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    paddingHorizontal: 10,
   },
   loadingContainer: {
     flex: 1,
@@ -322,23 +299,27 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     marginBottom: 20,
+    borderRadius: 10,
+    resizeMode: 'contain',
   },
   captionContainer: {
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 8,
     marginBottom: 10,
     width: '100%',
   },
   captionText: {
     fontSize: 16,
     textAlign: 'center',
+    color: '#222',
+  },
+  disabledCaptionText: {
+    color: '#666',
+    fontStyle: 'italic',
   },
   timerText: {
-    fontSize: 22,
-    color: '#fff',
-  },
-  disabledText: {
-    color: '#aaa',
-    fontStyle: 'italic',
+    fontSize: 24,
+    color: '#333',
+    fontWeight: 'bold',
   },
 });

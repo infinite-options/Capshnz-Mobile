@@ -83,7 +83,7 @@ export default function ScoreBoardNew() {
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [subscribe, unSubscribe]);
 
   useEffect(() => {
     subscribe((event) => {
@@ -122,7 +122,7 @@ export default function ScoreBoardNew() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.scoreboardTitleContainer}>
         <Image source={require("../assets/Polygon 1.svg")} style={styles.downwardPolygon} />
-        <Text style={styles.input}>ScoreBoard!</Text>
+        <Text style={styles.titleText}>ScoreBoard!</Text>
       </View>
 
       <View style={styles.imageContainer}>
@@ -183,10 +183,28 @@ const styles = StyleSheet.create({
   },
   scoreboardTitleContainer: {
     alignItems: "center",
-    marginTop: 0,
-    marginBottom: -10,
-    width: "100%",               // ✅ allow title to center
-    paddingHorizontal: 20,
+    justifyContent: "center",
+    marginTop: 20,
+    paddingHorizontal: 16,
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    alignSelf: "center",
+    color: "#000",
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    borderRadius: 24,
+    overflow: "visible",
+    maxWidth: "100%",
+    minWidth: 200,
+  },
+  downwardPolygon: {
+    width: 20,
+    height: 20,
+    marginBottom: 8,
   },
   imageContainer: {
     width: 340,
@@ -234,18 +252,16 @@ const styles = StyleSheet.create({
     fontFamily: "Grandstander",
   },
   input: {
-    width: "auto",
-    maxWidth: "100%",
+    width: "80%",
+    height: 60,
     backgroundColor: "white",
     borderRadius: 40,
     fontSize: 26,
     fontFamily: "Grandstander",
     fontWeight: "500",
     textAlign: "center",
+    marginVertical: 10,
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    flexWrap: "nowrap",
-    alignSelf: "center",
   },
   buttonContainer: {
     width: 300,
@@ -268,3 +284,5 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
+
+

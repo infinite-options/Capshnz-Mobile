@@ -1,5 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { handleApiError } from "../util/ApiHelper";
 import { ErrorContext } from "../../App";
@@ -107,12 +115,12 @@ const FinalScore = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.scoreboardTitleContainer}>
         <Image source={require("../assets/Polygon 1.svg")} style={styles.downwardPolygon} />
-        <Text style={styles.input}>GameOver!</Text>
+        <Text style={styles.titleText}>GameOver!</Text>
       </View>
 
       <View style={styles.scoreboardTitleContainer}>
         <Image source={require("../assets/Polygon 1.svg")} style={styles.downwardPolygon} />
-        <Text style={styles.input}>FinalScore!</Text>
+        <Text style={styles.titleText}>FinalScore!</Text>
       </View>
 
       {loadingImg && <ActivityIndicator size="large" color="#0000ff" />}
@@ -151,7 +159,7 @@ const FinalScore = () => {
 
       <View style={styles.scoreboardTitleContainer}>
         <Image source={require("../assets/Polygon 1.svg")} style={styles.downwardPolygon} />
-        <Text style={styles.input}>Winning Captions</Text>
+        <Text style={styles.titleText}>Winning Captions</Text>
       </View>
 
       {captions.map((caption, index) => (
@@ -191,22 +199,30 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
   },
-  input: {
-    width: "80%",
-    height: 60,
-    backgroundColor: "white",
-    borderRadius: 40,
-    fontSize: 26,
-    fontFamily: "Grandstander",
-    fontWeight: "500",
-    textAlign: "center",
-    marginVertical: 10,
-    paddingHorizontal: 20,
-  },
   scoreboardTitleContainer: {
     alignItems: "center",
     marginTop: 10,
     marginBottom: -10,
+    paddingHorizontal: 16,
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    alignSelf: "center",
+    color: "#000",
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    borderRadius: 24,
+    overflow: "visible",
+    maxWidth: "100%",
+    minWidth: 200,
+  },
+  downwardPolygon: {
+    width: 20,
+    height: 20,
+    marginBottom: 8,
   },
   scoreboardContainer: {
     width: "80%",

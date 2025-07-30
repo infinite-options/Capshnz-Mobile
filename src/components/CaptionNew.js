@@ -89,7 +89,7 @@ const CaptionNew = () => {
     });
 
     return () => {
-      unSubscribe();
+      unSubscribe(); // ✅ correct cleanup
     };
   }, []);
 
@@ -115,9 +115,7 @@ const CaptionNew = () => {
         >
           {({ remainingTime }) => {
             setItem("remaining-time", remainingTime);
-            return (
-              <Text style={styles.timerText}>{remainingTime}</Text>
-            );
+            return <Text>{remainingTime}</Text>;
           }}
         </CountdownCircleTimer>
       </View>
@@ -134,7 +132,8 @@ const CaptionNew = () => {
         <ActivityIndicator size="large" color="#0000ff" />
       )}
 
-      <View style={styles.buttonContainer}>
+      {/* 🟣 Centered Submit Button */}
+      <View style={styles.submitButtonWrapper}>
         <TouchableOpacity
           style={[styles.button, captionSubmitted ? styles.buttonDisabled : null]}
           onPress={() => submitButton(false)}
@@ -160,8 +159,6 @@ const CaptionNew = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     padding: 20,
     backgroundColor: '#7580B5D9',
   },
@@ -175,11 +172,6 @@ const styles = StyleSheet.create({
   timerContainer: {
     marginBottom: 20,
     alignItems: "center",
-  },
-  timerText: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#000",
   },
   imageContainer: {
     alignItems: 'center',
@@ -202,6 +194,15 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
+
+  // ✅ NEW WRAPPER TO CENTER BUTTON
+  submitButtonWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    width: '100%',
+  },
+
   button: {
     width: 200,
     height: 55,
@@ -209,7 +210,6 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
   },
   buttonText: {
     color: "white",
@@ -219,11 +219,6 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     backgroundColor: '#6c757d',
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: 'center',
   },
   input: {
     width: '90%',
