@@ -185,9 +185,9 @@ export default function ChooseRounds() {
       },
       input: {
         width: 330,
-        height: 50,
+        height: 60,
         backgroundColor: "white",
-        borderRadius: 40,
+        borderRadius: 30,
         color: "black",
         fontSize: 23,
         fontFamily: "Grandstander",

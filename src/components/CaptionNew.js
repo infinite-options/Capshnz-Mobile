@@ -140,7 +140,7 @@ const CaptionNew = () => {
           disabled={captionSubmitted}
         >
           <Text style={styles.buttonText}>
-            {captionSubmitted ? "Submit" : "Submit"}
+            {captionSubmitted ? "Please Wait" : "Submit"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -184,15 +184,17 @@ const styles = StyleSheet.create({
   },
   captionInput: {
     width: '90%',
-    height: 55,
+    height: 60,
     backgroundColor: 'white',
-    borderRadius: 40,
+    borderRadius: 30,
     color: 'black',
     fontSize: 26,
     fontFamily: 'Grandstander',
     fontWeight: '500',
     marginLeft: 'auto',
     marginRight: 'auto',
+    overflow: 'hidden',
+    
   },
 
   // ✅ NEW WRAPPER TO CENTER BUTTON
@@ -222,14 +224,15 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '90%',
-    height: 55,
+    height: 60,
     fontSize: 24,
     textAlign: 'center',
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 30,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginVertical: 10,
+    overflow: 'hidden',
   },
   upwardPolygonLeft: {
     marginTop: -10,

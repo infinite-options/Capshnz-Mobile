@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     overflow: "visible",
     maxWidth: "100%",
     minWidth: 200,
+    overflow: 'hidden',
   },
   downwardPolygon: {
     width: 20,
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginBottom: 20,
+    
   },
   scoreboardRow: {
     flexDirection: "row",
@@ -262,6 +264,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 10,
     paddingHorizontal: 20,
+    overflow: 'hidden',
   },
   buttonContainer: {
     width: 300,

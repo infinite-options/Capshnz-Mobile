@@ -194,9 +194,9 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '80%',
-    height: 50,
+    height: 60,
     backgroundColor: 'white',
-    borderRadius: 40,
+    borderRadius: 30,
     paddingHorizontal: 20,
     fontSize: 23,
     fontFamily: 'Grandstander',

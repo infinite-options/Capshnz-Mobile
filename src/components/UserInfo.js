@@ -123,9 +123,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
       },
       input: {
-        height: 40,
+        height: 60,
         borderColor: "gray",
         borderWidth: 1,
+        borderRadius: 30,
         paddingHorizontal: 10,
         backgroundColor: "white",
       },
@@ -133,9 +134,10 @@ const styles = StyleSheet.create({
         borderColor: "red",
       },
       header: {
-        height: 40,
+        height: 60,
         borderColor: "gray",
         borderWidth: 1,
+        borderRadius: 30,
         paddingHorizontal: 10,
         backgroundColor: "white",
   

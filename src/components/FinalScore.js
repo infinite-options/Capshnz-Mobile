@@ -53,25 +53,28 @@ const FinalScore = () => {
     }
   }
 
-  const subscribePlayAgain = async () => {
-    await subscribe(async (event) => {
-      if (event.data.message === "Play Again") {
-        setHostStartingAgain(true);
-      } else if (event.data.message === "Start Again") {
-        const updatedUserData = {
-          ...userData,
-          gameCode: event.data.gameCode,
-          roundNumber: 1,
-          host: false,
-        };
-        await joinGame(updatedUserData);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "WaitingRoom", params: { ...updatedUserData } }],
-        });
-      }
-    });
-  };
+  const [hasHandledFinalScore, setHasHandledFinalScore] = useState(false);
+
+const subscribePlayAgain = async () => {
+  await subscribe(async (event) => {
+    if (event.data.message === "Play Again") {
+      setHostStartingAgain(true);
+    } else if (event.data.message === "Start Again" && !hasHandledFinalScore) {
+      setHasHandledFinalScore(true); // Prevents double navigation
+      const updatedUserData = {
+        ...userData,
+        gameCode: event.data.gameCode,
+        roundNumber: 1,
+        host: false,
+      };
+      await joinGame(updatedUserData);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "WaitingRoom", params: { ...updatedUserData } }],
+      });
+    }
+  });
+};
 
   const fetchSummary = async () => {
     const response = await summary(userData.gameUID);
@@ -218,6 +221,7 @@ const styles = StyleSheet.create({
     overflow: "visible",
     maxWidth: "100%",
     minWidth: 200,
+    overflow: 'hidden',
   },
   downwardPolygon: {
     width: 20,

@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 60,
     backgroundColor: "white",
-    borderRadius: 40,
+    borderRadius: 30,
     fontSize: 26,
     fontFamily: "Grandstander",
     fontWeight: "500",
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 20,
     paddingTop: 15,
+    overflow: 'hidden',
   },
   lobbyPlayer: {
     flexDirection: "row",
