@@ -39,28 +39,36 @@ export default function ChooseScoring() {
         </TouchableOpacity>
         <Text style={styles.header}>Choose a scoring system</Text>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => setScoreType("V")}
-        >
-          <Text style={styles.buttonText}>Score by Votes</Text>
-        </TouchableOpacity>
+  style={[
+    styles.button,
+    scoreType === "V" && styles.selectedButton
+  ]}
+  onPress={() => setScoreType("V")}
+>
+  <Text style={styles.buttonText}>Score by Votes</Text>
+</TouchableOpacity>
         <Image
-          source={require('../assets/Polygon 4.png')}
-          style={styles.downwardPolygonRight}
-        />
+  source={require('../assets/Polygon 4.png')}
+  style={styles.downwardPolygonRight}
+  tintColor={scoreType === "V" ? "rgba(70, 195, 166, 0.85)" : "rgba(237, 70, 70, 0.59)"}
+/>
 
         <Text style={styles.description}>player receives 2 points per vote</Text>
         <Text style={styles.orText}>OR</Text>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => setScoreType("R")}
-        >
-          <Text style={styles.buttonText}>Score by Ranking</Text>
-        </TouchableOpacity>
+  style={[
+    styles.button,
+    scoreType === "R" && styles.selectedButton
+  ]}
+  onPress={() => setScoreType("R")}
+>
+  <Text style={styles.buttonText}>Score by Ranking</Text>
+</TouchableOpacity>
         <Image
-          source={require('../assets/Polygon 4.png')}
-          style={styles.downwardPolygonRight}
-        />
+  source={require('../assets/Polygon 4.png')}
+  style={styles.downwardPolygonRight}
+  tintColor={scoreType === "R" ? "rgba(70, 195, 166, 0.85)" : "rgba(237, 70, 70, 0.59)"}
+/>
         <Text style={styles.description}>
           player(or players) with the most votes = 5 points, 2nd place gets 3 points
         </Text>
@@ -99,8 +107,8 @@ const styles = StyleSheet.create({
     header: {
       color: "white",
       fontSize: 30,
-      fontFamily: "Grandstander",
-      fontWeight: "600",
+      fontFamily: "Arial",
+      fontWeight: "normal",
       textAlign: "center",
       marginBottom: 32,
     },
@@ -116,23 +124,23 @@ const styles = StyleSheet.create({
     buttonText: {
       color: "white",
       fontSize: 30,
-      fontFamily: "Grandstander",
-      fontWeight: "600",
+      fontFamily: "Arial",
+      fontWeight: "normal",
     },
     description: {
       width: 375,
       color: "white",
       fontSize: 22,
-      fontFamily: "Grandstander",
-      fontWeight: "600",
+      fontFamily: "Arial",
+      fontWeight: "normal",
       textAlign: "center",
       marginVertical: 20,
     },
     orText: {
       color: "black",
       fontSize: 30,
-      fontFamily: "Grandstander",
-      fontWeight: "600",
+      fontFamily: "Arial",
+      fontWeight: "normal",
       marginVertical: 20,
     },
     continueButton: {
@@ -147,8 +155,8 @@ const styles = StyleSheet.create({
     continueButtonText: {
       color: "white",
       fontSize: 35,
-      fontFamily: "Grandstander",
-      fontWeight: "600",
+      fontFamily: "Arial",
+      fontWeight: "normal",
     },
     downwardPolygonRight: {
       marginTop: -10,
@@ -157,6 +165,11 @@ const styles = StyleSheet.create({
       right: -80,
       top: -20,
     },
+    selectedButton: {
+    backgroundColor: "rgba(70, 195, 166, 0.85)", // Highlight color
+    borderWidth: 2,
+    borderColor: "#fff",
+  },
 
   });
   

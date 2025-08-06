@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     color: "black",
     fontSize: 24,
-    fontFamily: "Grandstander",
-    fontWeight: "700",
+    fontFamily: "Arial",
+    fontWeight: "normal",
     textAlign: "center",
   },
   deckContainer: {
@@ -176,8 +176,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   deckText: {
-    fontFamily: "Grandstander",
-    fontWeight: "700",
+    fontFamily: "Arial",
+    fontWeight: "normal",
     fontSize: 13,
     color: "white",
     marginTop: 5,

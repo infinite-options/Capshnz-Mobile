@@ -94,6 +94,7 @@ const CaptionNew = () => {
   }, []);
 
   return (
+    
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
@@ -102,6 +103,18 @@ const CaptionNew = () => {
           resizeMode="contain"
         />
       </View>
+      <View style={styles.topBar}>
+  <TouchableOpacity onPress={() => navigation.navigate('Landing')}>
+    <Text style={styles.closeText}>✕</Text>
+  </TouchableOpacity>
+</View>
+{userData.isHost && (
+  <View style={styles.terminateButtonWrapper}>
+    <TouchableOpacity style={styles.terminateButton} onPress={() => navigation.navigate('Landing')}>
+      <Text style={styles.terminateButtonText}>Terminate Game & Return Home</Text>
+    </TouchableOpacity>
+  </View>
+)}
 
       <View style={styles.timerContainer}>
         <CountdownCircleTimer
@@ -189,8 +202,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     color: 'black',
     fontSize: 26,
-    fontFamily: 'Grandstander',
-    fontWeight: '500',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
     marginLeft: 'auto',
     marginRight: 'auto',
     overflow: 'hidden',
@@ -216,8 +229,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
-    fontWeight: "700",
+    fontFamily: "Arial",
+    fontWeight: "normal",
   },
   buttonDisabled: {
     backgroundColor: '#6c757d',
@@ -241,6 +254,34 @@ const styles = StyleSheet.create({
     right: 100,
     bottom: -30,
   },
+  topBar: {
+  position: 'absolute',
+  top: 40,
+  right: 20,
+  zIndex: 10,
+},
+closeText: {
+  fontSize: 28,
+  color: '#333',
+  fontWeight: 'bold',
+},
+terminateButtonWrapper: {
+  alignItems: 'center',
+  marginTop: 20,
+},
+terminateButton: {
+  backgroundColor: '#DC816A',
+  paddingVertical: 12,
+  paddingHorizontal: 24,
+  borderRadius: 30,
+},
+terminateButtonText: {
+  color: 'white',
+  fontSize: 18,
+  fontFamily: 'Arial',
+  fontWeight: 'normal',
+},
+  
 });
 
 export default CaptionNew;

@@ -121,7 +121,7 @@ export default function ScoreBoardNew() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.scoreboardTitleContainer}>
-        <Image source={require("../assets/Polygon 1.svg")} style={styles.downwardPolygon} />
+        <Image source={require("../assets/polygon-downwards-white.png")} style={styles.downwardPolygon} />
         <Text style={styles.titleText}>ScoreBoard!</Text>
       </View>
 
@@ -140,6 +140,7 @@ export default function ScoreBoardNew() {
           <Text style={styles.scoreText}>Points</Text>
           <Text style={styles.scoreText}>Total</Text>
         </View>
+        
 
         {scoreBoard.map((player, index) => (
           <View key={index}>
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontWeight: "normal",
     textAlign: "center",
     alignSelf: "center",
     color: "#000",
@@ -244,28 +245,55 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   captionText: {
-    color: "white",
+    color: "#000000", // Black color for standout
     fontSize: 24,
-    fontFamily: "Grandstander",
+    fontFamily: "Arial",
+    fontWeight: "normal", // Make it bold
   },
   scoreText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
+    fontFamily: "Arial",
   },
   input: {
-    width: "80%",
-    height: 60,
-    backgroundColor: "white",
-    borderRadius: 40,
+  width: 250, // or any fixed value, e.g. 250
+  height: 60,
+  backgroundColor: "white",
+  borderRadius: 30, // half of height
+  fontSize: 26,
+  fontFamily: "Arial",
+  fontWeight: "normal",
+  textAlign: "center",
+  marginVertical: 10,
+  paddingHorizontal: 20,
+  overflow: 'hidden',
+  alignSelf: "center", // ensure centering
+},
+  inputText: {
     fontSize: 26,
-    fontFamily: "Grandstander",
-    fontWeight: "500",
-    textAlign: "center",
-    marginVertical: 10,
-    paddingHorizontal: 20,
-    overflow: 'hidden',
+    fontFamily: "Arial",
+    fontWeight: "normal",
+    textAlign: "center",      // center text inside Text
+    color: "black",
   },
+  buttonGallery: {
+  width: 250,
+  height: 50,
+  backgroundColor: "white",
+  borderRadius: 25,
+  justifyContent: "center",
+  alignItems: "center",
+  alignSelf: "center",
+  marginVertical: 10,
+},
+buttonGalleryText: {
+  fontSize: 22,
+  fontFamily: "Arial",
+  fontWeight: "normal",
+  color: "black",
+  textAlign: "center",
+},
+  //
   buttonContainer: {
     width: 300,
     alignItems: "center",
@@ -283,8 +311,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
-    fontWeight: "700",
+    fontFamily: "Arial",
+    fontWeight: "normal",
   },
 });
 

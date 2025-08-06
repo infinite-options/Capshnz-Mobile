@@ -175,8 +175,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 40,
-    fontFamily: 'Grandstander',
-    fontWeight: '800',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
     textAlign: 'center',
     color: 'white',
   },
@@ -187,8 +187,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 24,
-    fontFamily: 'Grandstander',
-    fontWeight: '600',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
     color: 'white',
     marginBottom: 10,
   },
@@ -199,8 +199,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: 20,
     fontSize: 23,
-    fontFamily: 'Grandstander',
-    fontWeight: '500',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
     marginBottom: 20,
   },
   button: {
@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 20,
-    fontFamily: 'Grandstander',
-    fontWeight: '600',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
   },
   feedbackButton: {
     flexDirection: 'row',

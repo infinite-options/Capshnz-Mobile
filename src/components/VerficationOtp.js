@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 30,
     fontSize: 26,
-    fontFamily: 'Grandstander',
-    fontWeight: '500',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
     textAlign: 'center',
     marginVertical: 10,
     paddingHorizontal: 20,
@@ -148,10 +148,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     color: 'white',
     fontSize: 24,
-    fontWeight: '800',
+    fontWeight: 'normal',
     textAlign: 'center',
    // textAlignVertical: 'center',
-    fontFamily: 'Grandstander', 
+    fontFamily: 'Arial', 
     marginVertical: 10,
     paddingHorizontal: 20,
   },
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     textAlign: 'center',
     marginTop: 16,
-    fontFamily: 'Grandstander', 
+    fontFamily: 'Arial', 
   },
   inputInvalid: {
     borderColor: 'red',
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 16,
     marginTop: 8,
-    fontFamily: 'Grandstander', 
+    fontFamily: 'Arial', 
   },
   button: {
     width: 218,
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 24,
-    fontWeight: '600',
-    fontFamily: 'Grandstander', 
+    fontWeight: 'normal',
+    fontFamily: 'Arial', 
   },
   infoContainer: {
     marginTop: 20,
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    fontFamily: 'Grandstander',
+    fontFamily: 'Arial',
   },
 });
 

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 25,
     borderColor: 'black',
-    fontFamily: 'Josefin Sans',
+    fontFamily: 'Arial',
     fontWeight: 'bold',
     fontSize: 20,
     color: 'black',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   headerGameRules: {
-    fontFamily: 'Josefin Sans',
+    fontFamily: 'Arial',
     fontSize: 20,
     fontWeight: 'bold',
     position: 'absolute',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   listGameRules: {
-    fontFamily: 'Josefin Sans',
+    fontFamily: 'Arial',
     fontWeight: '300',
     fontSize: 20,
     position: 'absolute',

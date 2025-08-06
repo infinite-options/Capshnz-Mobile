@@ -15,6 +15,7 @@ import { joinGame, getGameScore, summary, summaryEmail } from "../util/Api";
 import useAbly from "../util/ably";
 import axios from "axios";
 
+
 const FinalScore = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -113,6 +114,7 @@ const subscribePlayAgain = async () => {
   function landingButton() {
     navigation.navigate("StartGame", { ...userData });
   }
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontWeight: "normal",
     textAlign: "center",
     alignSelf: "center",
     color: "#000",
@@ -269,8 +271,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 30,
-    fontFamily: "Grandstander",
-    fontWeight: "600",
+    fontFamily: "Arial",
+    fontWeight: "normal",
   },
   loadingContainer: {
     flexDirection: "row",
@@ -291,7 +293,7 @@ const styles = StyleSheet.create({
   captionText: {
     fontSize: 20,
     color: "#FFF",
-    fontFamily: "Grandstander",
+    fontFamily: "Arial",
     marginTop: 10,
   },
   captionButtonContainer: {

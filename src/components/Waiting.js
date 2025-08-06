@@ -200,8 +200,8 @@ const styles = StyleSheet.create({
   playerAlias: {
     fontSize: 25,
     color: 'white',
-    fontFamily: 'Grandstander',
-    fontWeight: '700',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
   },
   gameCode: {
     fontSize: 18,
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 10,
     color: '#FFF',
-    fontFamily: 'Grandstander',
-    fontWeight: '700',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
   },
   shareButton: {
     width: 330,
@@ -228,8 +228,8 @@ const styles = StyleSheet.create({
   shareButtonText: {
     color: 'white',
     fontSize: 24,
-    fontFamily: 'Grandstander',
-    fontWeight: '700',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
   },
   selectDeckButton: {
     width: 330,
@@ -243,8 +243,8 @@ const styles = StyleSheet.create({
   selectDeckButtonText: {
     color: 'white',
     fontSize: 24,
-    fontFamily: 'Grandstander',
-    fontWeight: '700',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
   },
   startGameButton: {
     width: 330,
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   startGameButtonText: {
     color: 'white',
     fontSize: 24,
-    fontFamily: 'Grandstander',
-    fontWeight: '700',
+    fontFamily: 'Arial',
+    fontWeight: 'normal',
   },
 });

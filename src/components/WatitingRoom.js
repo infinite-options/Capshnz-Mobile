@@ -224,8 +224,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 30,
     fontSize: 26,
-    fontFamily: "Grandstander",
-    fontWeight: "500",
+    fontFamily: "Arial",
+    fontWeight: "normal",
     textAlign: "center",
     marginVertical: 10,
     paddingHorizontal: 20,
@@ -245,8 +245,8 @@ const styles = StyleSheet.create({
   },
   playerAlias: {
     fontSize: 20,
-    fontFamily: "Grandstander",
-    fontWeight: "600",
+    fontFamily: "Arial",
+    fontWeight: "normal",
   },
   button: {
     width: 330,
@@ -260,8 +260,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
-    fontWeight: "700",
+    fontFamily: "Arial",
+    fontWeight: "normal",
   },
   deckImage: {
     width: 110,
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   },
   deckText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "normal",
     color: "#333",
     textAlign: "center",
     marginVertical: 10,

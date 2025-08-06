@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: 'normal',
     textAlign: 'center',
   },
   textInput: {
@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: 'normal',
   },
 });

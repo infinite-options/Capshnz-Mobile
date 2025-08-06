@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
       },
       heading: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: 'normal',
       },
       formContainer: {
         marginVertical: 20,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
       buttonText: {
         fontSize: 18,
         color: '#fff',
-        fontWeight: 'bold',
+        fontWeight: 'normal',
       },
       joinButton: {
         backgroundColor: '#5cb85c',
