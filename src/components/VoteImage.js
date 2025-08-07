@@ -201,14 +201,15 @@ export default function VoteImage() {
   }
 
   function updateToggles(index) {
-    if (captions[index] === isMyCaption) {
-      Alert.alert('You cannot vote for your own caption');
-      return;
-    }
-    setToggles(toggles.map((t, i) => (i === index ? !t : false)));
-    setVoteSubmitted(true);
-    voteButton(index);
+  if (captions[index] === isMyCaption) {
+    Alert.alert('You cannot vote for your own caption');
+    return;
   }
+  if (voteSubmitted) return; // Prevent multiple votes
+  setToggles(toggles.map((t, i) => i === index)); // Only one selected
+  setVoteSubmitted(true);
+  voteButton(index);
+}
 
   const backgroundColors = {
     default: '#D4B551',
@@ -239,34 +240,41 @@ export default function VoteImage() {
           </CountdownCircleTimer>
 
           {shuffledCaptions.map((caption, index) => {
-            const isOwnCaption = caption === isMyCaption;
-            return (
-              <TouchableOpacity
-                key={index}
-                onPress={() => updateToggles(index)}
-                disabled={isOwnCaption}
-                style={[
-                  styles.captionContainer,
-                  {
-                    backgroundColor: isOwnCaption
-                      ? backgroundColors.disabled
-                      : toggles[index]
-                      ? backgroundColors.selected
-                      : backgroundColors.default
-                  }
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.captionText,
-                    isOwnCaption && styles.disabledCaptionText
-                  ]}
-                >
-                  {caption}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+  const isOwnCaption = caption === isMyCaption;
+  const isSelected = toggles[index];
+  return (
+    <TouchableOpacity
+      key={index}
+      onPress={() => updateToggles(index)}
+      disabled={isOwnCaption || voteSubmitted}
+      style={[
+        styles.captionContainer,
+        {
+          backgroundColor: isOwnCaption
+            ? backgroundColors.disabled
+            : isSelected
+            ? backgroundColors.selected
+            : backgroundColors.default,
+          opacity: voteSubmitted && !isSelected ? 0.6 : 1,
+        }
+      ]}
+    >
+      <Text
+        style={[
+          styles.captionText,
+          isOwnCaption && styles.disabledCaptionText
+        ]}
+      >
+        {caption}
+      </Text>
+    </TouchableOpacity>
+  );
+})}
+      {voteSubmitted && (
+  <Text style={{ marginTop: 10, color: 'green', fontWeight: 'bold' }}>
+    Vote submitted! Waiting for others...
+  </Text>
+)}
         </View>
       )}
     </View>

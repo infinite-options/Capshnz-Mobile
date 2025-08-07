@@ -256,18 +256,22 @@ const styles = StyleSheet.create({
     fontFamily: "Arial",
   },
   input: {
-  width: 250, // or any fixed value, e.g. 250
-  height: 60,
+  width: 250,
+  height: 50, // Match the height to the container
   backgroundColor: "white",
-  borderRadius: 30, // half of height
-  fontSize: 26,
+  borderRadius: 25,
+  fontSize: 22,
   fontFamily: "Arial",
   fontWeight: "normal",
   textAlign: "center",
+  textAlignVertical: "center", // Helps on Android
   marginVertical: 10,
-  paddingHorizontal: 20,
-  overflow: 'hidden',
-  alignSelf: "center", // ensure centering
+  paddingHorizontal: 0,
+  paddingVertical: 0,
+  alignSelf: "center",
+  justifyContent: "center", // Not needed for Text, but fine if used in View
+  lineHeight: 50, // Ensures vertical centering for the text
+  overflow: "hidden",
 },
   inputText: {
     fontSize: 26,
