@@ -197,7 +197,7 @@ export default function WaitingRoom() {
 
       {userData.host && !userData.deckSelected && (
         <TouchableOpacity style={styles.button} onPress={selectDeckButton}>
-          <Text style={styles.buttonText}>SelectDeck</Text>
+          <Text style={styles.buttonText}>Select Deck</Text>
         </TouchableOpacity>
       )}
 

@@ -242,14 +242,21 @@ const styles = StyleSheet.create({
     height: 50,
   },
   captionContainer: {
-    alignItems: "center",
-  },
+  alignItems: "center",
+  marginTop: 0, // Increased space between points row and caption
+},
   captionText: {
-    color: "#000000", // Black color for standout
-    fontSize: 24,
-    fontFamily: "Arial",
-    fontWeight: "normal", // Make it bold
-  },
+  color: "#2D3748", // Darker color for contrast
+  fontSize: 26,
+  fontFamily: "Arial",
+  fontWeight: "bold",
+  fontStyle: "italic",
+  //backgroundColor: "#FFF9C4", // Light yellow highlight (optional)
+  paddingHorizontal: 10,
+  paddingVertical: 4,
+  borderRadius: 8,
+  textAlign: "center",
+},
   scoreText: {
     color: "white",
     fontSize: 24,

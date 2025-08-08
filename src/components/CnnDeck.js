@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: 'normal',
         marginBottom: 20,
     },
     card: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: 'normal',
     },
     date: {
         fontSize: 14,
