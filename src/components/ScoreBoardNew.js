@@ -121,9 +121,14 @@ export default function ScoreBoardNew() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.scoreboardTitleContainer}>
-        <Image source={require("../assets/polygon-downwards-white.png")} style={styles.downwardPolygon} />
-        <Text style={styles.titleText}>ScoreBoard!</Text>
-      </View>
+  <Text style={styles.titleText}>ScoreBoard!</Text>
+  <Image
+    source={require("../assets/polygon-downwards-white.png")}
+    style={styles.downwardPolygon}
+  />
+</View>
+
+      
 
       <View style={styles.imageContainer}>
         {loadingImg ? (
@@ -153,6 +158,11 @@ export default function ScoreBoardNew() {
             <View style={styles.captionContainer}>
               <Text style={styles.captionText}>
                 {player.caption !== "" ? player.caption : "\u00A0"}
+              </Text>
+            </View>
+            <View style={styles.captionContainer}>
+              <Text style={styles.captionText}>
+                {player.caption !== "" ? "\u00A0" : "\u00A0"}
               </Text>
             </View>
           </View>
@@ -204,10 +214,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   downwardPolygon: {
-    width: 20,
-    height: 20,
-    marginBottom: 8,
-  },
+  width: 40,
+  height: 20,
+  marginTop: 10,
+  marginLeft: 145, // Adjust this value until the polygon is under the "r"
+  alignSelf: "flex-start",
+},
   imageContainer: {
     width: 340,
     height: 300,
@@ -239,7 +251,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: 350,
-    height: 50,
+    height: 35,
   },
   captionContainer: {
   alignItems: "center",
@@ -318,6 +330,33 @@ buttonGalleryText: {
     alignItems: "center",
     marginTop: 30,
     marginBottom: 20,
+  },
+  scoreboardTitleContainer: {
+  alignItems: "center",
+  justifyContent: "center",
+  marginTop: 20,
+  paddingHorizontal: 16,
+},
+downwardPolygon: {
+    width: 40,
+    height: 20,
+    marginTop: 0, // Set to 0 to remove the gap
+    marginLeft: 145, // Adjust as needed for horizontal alignment
+    alignSelf: "flex-start",
+  },
+titleText: {
+    fontSize: 30,
+    fontWeight: "normal",
+    textAlign: "center",
+    alignSelf: "center",
+    color: "#000",
+    backgroundColor: "#fff",
+    paddingVertical: 6, // Reduced from 10 to 6 (or try 4)
+    paddingHorizontal: 24,
+    borderRadius: 24,
+    maxWidth: "100%",
+    minWidth: 200,
+    overflow: "hidden",
   },
   buttonText: {
     color: "white",

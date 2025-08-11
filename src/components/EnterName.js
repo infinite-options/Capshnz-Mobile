@@ -68,11 +68,11 @@ export default function EnterName() {
         />
 
         <TextInput
-          style={styles.input}
-          value={name}
-          placeholder="Enter name here..."
-          onChangeText={handleNameChange}
-        />
+  style={[styles.input, { outlineWidth: 0 }]}
+  value={name}
+  placeholder="Enter name here..."
+  onChangeText={handleNameChange}
+/>
 
         <Image
           source={require('../assets/polygon-downwards-white.png')}
@@ -85,11 +85,11 @@ export default function EnterName() {
         />
 
         <TextInput
-          style={styles.input}
-          value={alias}
-          placeholder="Enter screen name here..."
-          onChangeText={handleAliasChange}
-        />
+  style={[styles.input, { outlineWidth: 0 }]}
+  value={alias}
+  placeholder="Enter screen name here..."
+  onChangeText={handleAliasChange}
+/>
 
         <TouchableOpacity
           style={styles.button}

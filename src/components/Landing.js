@@ -9,6 +9,7 @@ export default function Landing() {
     const [cookies, setCookie] = useState(["email"]);
     const [cookiesUsed, setCookiesUsed] = useState(false);
     const navigation = useNavigation();
+    
 
     const handleEmailChange = (inputEmail) => {
         setEmail(inputEmail);
@@ -49,13 +50,17 @@ export default function Landing() {
                 />
 
                 <TextInput
-                    style={[styles.input, isInvalid && styles.inputInvalid]}
-                    value={email}
-                    placeholder="Enter email here..."
-                    onChangeText={handleEmailChange}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                />
+    style={[
+        styles.input,
+        isInvalid && styles.inputInvalid,
+        { outlineWidth: 0 } // This removes the blue outline on web
+    ]}
+    value={email}
+    placeholder="Enter email here..."
+    onChangeText={handleEmailChange}
+    keyboardType="email-address"
+    autoCapitalize="none"
+/>
 
                 <Image
                     source={require('../assets/polygon-downwards-white.png')}

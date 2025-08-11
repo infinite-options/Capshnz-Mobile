@@ -159,11 +159,12 @@ const styles = StyleSheet.create({
       fontWeight: "normal",
     },
     downwardPolygonRight: {
-  marginTop: 10,   // Increased value to move polygon further down
+  marginTop: 0,
   width: 50,
   height: 50,
-  right: -80,
-  top: -20,
+  right: -100,
+  top: -25,
+  backgroundColor: "transparent", // default
 },
     selectedButton: {
     backgroundColor: "rgba(70, 195, 166, 0.85)", // Highlight color
