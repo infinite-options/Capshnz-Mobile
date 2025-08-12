@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#6c757d',
   },
   input: {
-    width: '75%',
+    width: 320, // Fixed width for consistency across platforms
     height: 45,
     fontSize: 24,
     textAlign: 'center',

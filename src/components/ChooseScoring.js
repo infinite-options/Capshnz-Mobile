@@ -47,10 +47,11 @@ export default function ChooseScoring() {
 >
   <Text style={styles.buttonText}>Score by Votes</Text>
 </TouchableOpacity>
-        <Image
-  source={require('../assets/Polygon 4.png')}
-  style={styles.downwardPolygonRight}
-  tintColor={scoreType === "V" ? "rgba(70, 195, 166, 0.85)" : "rgba(237, 70, 70, 0.59)"}
+        <View
+  style={[
+    styles.downwardTriangle,
+    { borderTopColor: scoreType === "V" ? "rgba(70, 195, 166, 0.85)" : "rgba(237, 70, 70, 0.59)" }
+  ]}
 />
 
         <Text style={styles.description}>player receives 2 points per vote</Text>
@@ -64,10 +65,11 @@ export default function ChooseScoring() {
 >
   <Text style={styles.buttonText}>Score by Ranking</Text>
 </TouchableOpacity>
-        <Image
-  source={require('../assets/Polygon 4.png')}
-  style={styles.downwardPolygonRight}
-  tintColor={scoreType === "R" ? "rgba(70, 195, 166, 0.85)" : "rgba(237, 70, 70, 0.59)"}
+        <View
+  style={[
+    styles.downwardTriangle,
+    { borderTopColor: scoreType === "R" ? "rgba(70, 195, 166, 0.85)" : "rgba(237, 70, 70, 0.59)" }
+  ]}
 />
         <Text style={styles.description}>
           player(or players) with the most votes = 5 points, 2nd place gets 3 points
@@ -171,6 +173,19 @@ const styles = StyleSheet.create({
     //borderWidth: 2,
     //borderColor: "#fff",
   },
+  downwardTriangle: {
+  width: 0,
+  height: 0,
+  borderLeftWidth: 25,
+  borderRightWidth: 25,
+  borderTopWidth: 30,
+  borderLeftColor: 'transparent',
+  borderRightColor: 'transparent',
+  borderTopColor: 'rgba(237, 70, 70, 0.59)', // default, will be overridden
+  alignSelf: 'center',
+  marginTop: -10,
+  marginLeft: 180, // <-- shift triangle to right
+},
 
   });
   

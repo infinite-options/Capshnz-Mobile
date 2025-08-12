@@ -193,7 +193,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    width: '80%',
+    width: 320, // <-- fixed width for consistency across platforms
+    // maxWidth: '90%', // optional: prevents overflow on very small screens
     height: 60,
     backgroundColor: 'white',
     borderRadius: 30,
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    width: '50%',
+    width: 320, // <-- fixed width for consistency across platforms
     height: 50,
     backgroundColor: '#46C3A6',
     borderRadius: 30,
@@ -212,7 +213,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 30,
     marginBottom: 20,
-
   },
   buttonText: {
     color: 'white',

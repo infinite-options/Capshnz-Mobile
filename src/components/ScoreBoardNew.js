@@ -122,10 +122,7 @@ export default function ScoreBoardNew() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.scoreboardTitleContainer}>
   <Text style={styles.titleText}>ScoreBoard!</Text>
-  <Image
-    source={require("../assets/polygon-downwards-white.png")}
-    style={styles.downwardPolygon}
-  />
+  <View style={styles.triangleDown} />
 </View>
 
       
@@ -364,6 +361,20 @@ titleText: {
     fontFamily: "Arial",
     fontWeight: "normal",
   },
+  triangleDown: {
+  width: 0,
+  height: 0,
+  borderLeftWidth: 20,
+  borderRightWidth: 20,
+  borderTopWidth: 16,
+  borderLeftColor: 'transparent',
+  borderRightColor: 'transparent',
+  borderTopColor: '#fff', // Match your banner background
+  alignSelf: 'center',
+  marginTop: -2,
+  marginBottom: 12,
+  marginLeft: 120, // Increase this value to shift right
+},
 });
 
 
