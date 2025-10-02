@@ -24,8 +24,14 @@
     "base-64": "^1.0.0",
     "buffer": "^6.0.3",
     "cheerio": "^1.0.0-rc.12",
+    "crypto-browserify": "^3.12.1",
     "expo": "~51.0.20",
+    "expo-auth-session": "~5.5.2",
+    "expo-crypto": "^15.0.7",
+    "expo-linking": "~6.3.1",
+    "expo-random": "^14.0.1",
     "expo-status-bar": "~1.12.1",
+    "expo-web-browser": "~13.0.3",
     "react": "18.2.0",
     "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "18.2.0",
@@ -38,7 +44,9 @@
     "react-native-svg": "^15.5.0",
     "react-native-svg-transformer": "^1.5.0",
     "react-native-web": "~0.19.10",
-    "react-native-workers": "^0.3.1"
+    "react-native-workers": "^0.3.1",
+    "stream-browserify": "^3.0.0",
+    "vm-browserify": "^1.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
