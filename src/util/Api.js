@@ -108,8 +108,16 @@ async function addUser(userData) {
 async function addUserByEmail(email) {
     // console.log("addUserByEmail: ", addUserByEmailURL)
     // console.log("addUserByEmail Payload: ", {email})
-    const response = await axios.post(addUserByEmailURL, 
-        { email })
+
+    const payload = {
+            user_email: email  // ✅ Changed from 'email' to 'user_email'
+        };
+    console.log('Payload:', JSON.stringify(payload, null, 2));
+        
+    const response = await axios.post(addUserByEmailURL, payload);
+
+    // const response = await axios.post(addUserByEmailURL, 
+    //     { email })
     console.log("addUserByEmail Response: ", response.data)
    /*     
     console.log('Add by email id');
