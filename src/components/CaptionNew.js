@@ -470,7 +470,7 @@ const CaptionNew = () => {
                   source={require('../assets/polygon-upward-white.png')}
                   style={styles.upwardPolygonLeft}
               />
-            <TextInput style={styles.input} editable={false}>{userData.deckTitle}</TextInput>
+            <TextInput style={styles.input} editable={false} value={userData.deckTitle}/>
       </View>
     </View>
   );

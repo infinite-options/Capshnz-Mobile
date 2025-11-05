@@ -140,7 +140,7 @@ export default function WaitingRoom(){
         source={require('../assets/Polygon 1.svg')}
         style={styles.downwardPolygon}
     />
-    <TextInput style={styles.input} editable={false}>Waiting for all Players . . .</TextInput>
+    <TextInput style={styles.input} editable={false} value="Waiting for all Players . . ."/>
 
 
     <View style={styles.container}>

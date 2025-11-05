@@ -83,7 +83,7 @@ export default function EnterName() {
         <View style={styles.centered}>
 
             
-            <TextInput style={styles.header} editable={false}>Welcome to Capshnz!</TextInput>
+            <TextInput style={styles.header} editable={false} value="Welcome to Capshnz!"/>
             <Image
               source={require('../assets/polygon-downwards-white.png')}
               style={styles.downwardPolygonLeft}

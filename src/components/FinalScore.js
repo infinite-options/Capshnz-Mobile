@@ -119,9 +119,9 @@ const FinalScore = () => {
           source={require("../assets/Polygon 1.svg")}
           style={styles.downwardPolygon}
         />
-        <TextInput style={styles.input} editable={false}>
-          GameOver!
-        </TextInput>
+        <TextInput style={styles.input} editable={false}
+          value = "GameOver!"
+        />
       </View>
 
       <View style={styles.scoreboardTitleContainer}>
@@ -129,9 +129,9 @@ const FinalScore = () => {
           source={require("../assets/Polygon 1.svg")}
           style={styles.downwardPolygon}
         />
-        <TextInput style={styles.input} editable={false}>
-          FinalScore!
-        </TextInput>
+        <TextInput style={styles.input} editable={false}
+          value="FinalScore!"
+        />
       </View>
 
       {loadingImg && <ActivityIndicator size="large" color="#0000ff" />}
@@ -177,9 +177,9 @@ const FinalScore = () => {
           source={require("../assets/Polygon 1.svg")}
           style={styles.downwardPolygon}
         />
-        <TextInput style={styles.input} editable={false}>
-          Winning Captions
-        </TextInput>
+        <TextInput style={styles.input} editable={false}
+          value="Winning Captions"
+        />
       </View>
 
       {captions.map((caption, index) => (
