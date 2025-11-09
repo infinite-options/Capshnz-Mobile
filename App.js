@@ -13,11 +13,12 @@ import StartGame from './src/components/StartGame';
 import ChooseScoring from './src/components/ChooseScoring';
 import Feedback from './src/components/Feedback';
 import ChooseRounds from './src/components/ChooseRounds';
-import WaitingRoom from './src/components/WatitingRoom';
+import WaitingRoom from './src/components/WaitingRoom';
 import Waiting from './src/components/Waiting';
 import SelectDeck from './src/components/SelectDeck';
 import GameRules from './src/components/GameRules';
 import GooglePhotos from './src/components/GooglePhotos';
+import GooglePhotosWithPicker from './src/components/GooglePhotosWithPicker';
 import CaptionNew from './src/components/CaptionNew';
 import LoadingScreen from './src/components/LoadingScreen';
 import ScoreBoardNew from './src/components/ScoreBoardNew';
@@ -67,15 +68,11 @@ export default function App() {
               <Stack.Screen name="FinalScore" component={FinalScore} />
               <Stack.Screen name="MidGameWaitingRoom" component={MidGameWaitingRoom} />
               <Stack.Screen name="VoteImage" component={VoteImage} />
-
-
-              <Stack.Screen name="Feedback" component={Feedback} />
-          
+              <Stack.Screen name="Feedback" component={Feedback} />         
               <Stack.Screen name="UserInfo" component={UserInfo} />
               <Stack.Screen name="Confirmation" component={Confirmation} />
-
               <Stack.Screen name="SelectDeck" component={SelectDeck} />
-              <Stack.Screen name="GooglePhotos" component={GooglePhotos} />
+              <Stack.Screen name="GooglePhotosWithPicker" component={GooglePhotosWithPicker} />
               <Stack.Screen name="CnnDeck" component={CnnDeck} />
               
             </Stack.Navigator>

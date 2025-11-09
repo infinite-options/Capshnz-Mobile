@@ -1,9 +1,9 @@
 import * as Ably from "ably";
-import { REACT_APP_ABLY_API_KEY } from '@env';
+import { EXPO_PUBLIC_ABLY_API_KEY } from '@env';
 
 
-const ABLY_API_KEY = REACT_APP_ABLY_API_KEY;
-console.log("ably key: ", ABLY_API_KEY);
+const ABLY_API_KEY = EXPO_PUBLIC_ABLY_API_KEY;
+
 
 const useAbly = (() => {
   let channel = null;

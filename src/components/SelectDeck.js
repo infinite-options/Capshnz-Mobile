@@ -39,8 +39,14 @@ export default function SelectDeck() {
       //console.log("after select deck");
       let isApi;
       if (deckTitle === "Google Photos") {
+        console.log("✅ Entered Google Photos block");
+        console.log("UserData before navigation:", userData);
         await publish({ data: { message: "Deck Selected" } });
-        navigation.navigate("GooglePhotos", { state: userData });
+        //navigation.navigate("GooglePhotos", { state: userData });
+        console.log("✅ Finished publish call");
+        console.log("🧭 Navigation object:", navigation);
+        navigation.navigate("GooglePhotosWithPicker", userData);
+        console.log("✅ Navigation triggered to GooglePhotosWithPicker");
         return;
       } else if (
         deckTitle === "Cleveland Gallery" ||
