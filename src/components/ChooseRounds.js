@@ -178,7 +178,7 @@ export default function ChooseRounds() {
       header: {
         color: "white",
         fontSize: 32,
-        fontFamily: "Grandstander",
+        fontFamily: "System",
         fontWeight: "600",
         textAlign: "center",
         marginBottom: 20,
@@ -190,7 +190,7 @@ export default function ChooseRounds() {
         borderRadius: 40,
         color: "black",
         fontSize: 23,
-        fontFamily: "Grandstander",
+        fontFamily: "System",
         fontWeight: "500",
         textAlign: "center",
         marginBottom: 10,
@@ -198,7 +198,7 @@ export default function ChooseRounds() {
       subText: {
         color: "white",
         fontSize: 24,
-        fontFamily: "Grandstander",
+        fontFamily: "System",
         fontWeight: "600",
         textAlign: "center",
         marginBottom: 20,
@@ -215,7 +215,7 @@ export default function ChooseRounds() {
       continueButtonText: {
         color: "white",
         fontSize: 40,
-        fontFamily: "Grandstander",
+        fontFamily: "System",
         fontWeight: "600",
       },
     });

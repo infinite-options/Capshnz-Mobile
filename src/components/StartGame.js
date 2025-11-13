@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 40,
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     fontWeight: '800',
     textAlign: 'center',
     color: 'white',
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 24,
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     fontWeight: '600',
     color: 'white',
     marginBottom: 10,
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     paddingHorizontal: 20,
     fontSize: 23,
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     fontWeight: '500',
     marginBottom: 20,
   },
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 20,
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     fontWeight: '600',
   },
   feedbackButton: {

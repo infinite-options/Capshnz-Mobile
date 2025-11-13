@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 40,
     fontSize: 26,
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     fontWeight: "500",
     textAlign: "center",
     marginVertical: 10,
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 30,
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     fontWeight: "600",
   },
   loadingContainer: {
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
   captionText: {
     fontSize: 20,
     color: "#FFF",
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     marginTop: 10,
   },
   captionButtonContainer: {

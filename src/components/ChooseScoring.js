@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     header: {
       color: "white",
       fontSize: 30,
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontWeight: "600",
       textAlign: "center",
       marginBottom: 32,
@@ -116,14 +116,14 @@ const styles = StyleSheet.create({
     buttonText: {
       color: "white",
       fontSize: 30,
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontWeight: "600",
     },
     description: {
       width: 375,
       color: "white",
       fontSize: 22,
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontWeight: "600",
       textAlign: "center",
       marginVertical: 20,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     orText: {
       color: "black",
       fontSize: 30,
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontWeight: "600",
       marginVertical: 20,
     },
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     continueButtonText: {
       color: "white",
       fontSize: 35,
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontWeight: "600",
     },
     downwardPolygonRight: {

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableOpacity, Image } from 'react-native';
 //import { useNavigate, Link } from "react-router-dom";
@@ -7,6 +8,7 @@ import { addUserByEmail } from "../util/Api";
 //import { Col, Container, Row } from "react-bootstrap";
 //import Form from "react-bootstrap/Form";
 //import Button from "react-bootstrap/Button";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -17,6 +19,8 @@ export default function Landing() {
     const [cookies, setCookie] = useState(["email"]);
     const [cookiesUsed, setCookiesUsed] = useState(false);
     const navigation = useNavigation();
+
+
 
 /*
     if (!cookiesUsed && cookies.email) {
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       borderRadius: 40,
       fontSize: 26,
-      fontFamily: 'Grandstander',
+      fontFamily: 'System',
       fontWeight: '500',
       textAlign: 'center',
       marginVertical: 10,
@@ -163,7 +167,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginBottom: 10,
       color: 'white',
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontWeight: "400",
       
     },
@@ -173,7 +177,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       borderRadius: 40,
       fontSize: 26,
-      fontFamily: 'Grandstander',
+      fontFamily: 'System',
       fontWeight: '500',
       textAlign: 'center',
       marginVertical: 10,
@@ -185,14 +189,14 @@ const styles = StyleSheet.create({
     errorText: {
       color: 'red',
       marginBottom: 10,
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontSize: 16,
     },
     agreement: {
       textAlign: 'center',
       marginBottom: 20,
       color: 'white',
-      fontFamily: "Grandstander",
+      fontFamily: "System",
       fontSize: 16,
     },
     agreementContainer: {
@@ -202,7 +206,7 @@ const styles = StyleSheet.create({
       color: 'blue',
       textAlign: 'center',
       marginTop: 20,
-      fontFamily: "Grandstander",
+      fontFamily: "System",
        fontSize: 16,
     },
     linkIcon: {
@@ -222,7 +226,7 @@ const styles = StyleSheet.create({
     buttonText: {
       color: 'white',
       fontSize: 20,
-      fontFamily: 'Grandstander',
+      fontFamily: 'System',
       fontWeight: '600',
     },
   });  

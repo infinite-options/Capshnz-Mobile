@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
   scoreboardTitle: {
     fontSize: 30,
     fontWeight: '700',
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     color: 'black',
     
   },
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
   captionText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
+    fontFamily: "System",
   },
   buttonContainer: {
     width:300,
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
   scoreText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     
   },
   input: {
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 40,
     fontSize: 26,
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     fontWeight: '500',
     textAlign: 'center',
     marginVertical: 10,
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     fontWeight: "700",
   },
   deckTitleContainer: {
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
   deckTitle: {
     fontSize: 30,
     fontWeight: '700',
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     color: 'black',
   },
 });

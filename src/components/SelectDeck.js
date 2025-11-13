@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, TextInput,FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, TextInput, FlatList, Platform } from "react-native";
 //import { useCookies } from "react-cookie";
 import useAbly from "../util/ably";
 import { getDecks, selectDeck } from "../util/Api";
@@ -44,9 +44,16 @@ export default function SelectDeck() {
         await publish({ data: { message: "Deck Selected" } });
         //navigation.navigate("GooglePhotos", { state: userData });
         console.log("✅ Finished publish call");
-        console.log("🧭 Navigation object:", navigation);
-        navigation.navigate("GooglePhotosWithPicker", userData);
-        console.log("✅ Navigation triggered to GooglePhotosWithPicker");
+
+        if (Platform.OS === 'web') {
+          console.log("🌐 Navigating to GooglePhotosWeb");
+          navigation.navigate("GooglePhotosWeb", userData);
+        } else {
+          console.log("📱 Navigating to GooglePhotosWithPicker (Android)");
+          navigation.navigate("GooglePhotosWithPicker", userData);
+        }
+        
+        console.log("✅ Navigation triggered");
         return;
       } else if (
         deckTitle === "Cleveland Gallery" ||
@@ -160,7 +167,7 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     color: "black",
     fontSize: 24,
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     fontWeight: "700",
     textAlign: "center",
   },
@@ -182,7 +189,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   deckText: {
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     fontWeight: "700",
     fontSize: 13,
     color: "white",

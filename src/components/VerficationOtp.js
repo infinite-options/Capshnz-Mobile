@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 40,
     fontSize: 26,
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     fontWeight: '500',
     textAlign: 'center',
     marginVertical: 10,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     textAlign: 'center',
    // textAlignVertical: 'center',
-    fontFamily: 'Grandstander', 
+    fontFamily: 'System', 
     marginVertical: 10,
     paddingHorizontal: 20,
   },
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     textAlign: 'center',
     marginTop: 16,
-    fontFamily: 'Grandstander', 
+    fontFamily: 'System', 
   },
   inputInvalid: {
     borderColor: 'red',
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 16,
     marginTop: 8,
-    fontFamily: 'Grandstander', 
+    fontFamily: 'System', 
   },
   button: {
     width: 218,
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 24,
     fontWeight: '600',
-    fontFamily: 'Grandstander', 
+    fontFamily: 'System', 
   },
   infoContainer: {
     marginTop: 20,
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
   },
 });
 

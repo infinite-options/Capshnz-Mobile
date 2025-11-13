@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     color: 'black',
     fontSize: 26,
-    fontFamily: 'Grandstander',
+    fontFamily: 'System',
     fontWeight: '500',
     borderWidth: 0,
     borderColor: 'white',
@@ -559,7 +559,7 @@ const styles = StyleSheet.create({
     buttonText: {
     color: "white",
     fontSize: 24,
-    fontFamily: "Grandstander",
+    fontFamily: "System",
     fontWeight: "700",
     },
   
