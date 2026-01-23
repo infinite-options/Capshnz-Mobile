@@ -13,7 +13,7 @@ export default function StartGame() {
   const [gameCode, setGameCode] = useState('');
   const [isCreateLoading, setCreateLoading] = useState(false);
   const [isJoinLoading, setJoinLoading] = useState(false);
- const context = useContext(ErrorContext); 
+  const context = useContext(ErrorContext); 
  
 
   const handleGameCodeChange = (text) => {

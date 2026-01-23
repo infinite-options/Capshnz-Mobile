@@ -27,6 +27,7 @@ import Waiting from "./src/components/Waiting";
 import SelectDeck from "./src/components/SelectDeck";
 import GameRules from "./src/components/GameRules";
 import GooglePhotos from "./src/components/GooglePhotos";
+import SelectFromDevice from "./src/components/SelectFromDevice";
 import CaptionNew from "./src/components/CaptionNew";
 import LoadingScreen from "./src/components/LoadingScreen";
 import ScoreBoardNew from "./src/components/ScoreBoardNew";
@@ -70,6 +71,7 @@ export default function App() {
           <Stack.Screen name='Confirmation' component={Confirmation} />
           <Stack.Screen name='SelectDeck' component={SelectDeck} />
           <Stack.Screen name='GooglePhotos' component={GooglePhotos} />
+          <Stack.Screen name='SelectFromDevice' component={SelectFromDevice} />
           <Stack.Screen name='CnnDeck' component={CnnDeck} />
         </Stack.Navigator>
       </NavigationContainer>

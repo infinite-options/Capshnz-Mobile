@@ -7,7 +7,9 @@ const checkEmailCodeURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.co
 const addUserURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/addUser"
 const createGameURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/createGame"
 const joinGameURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/joinGame"
-const decksURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/decks"
+// DEVELOPMENT: Using local backend for decks endpoint (use your computer's IP, not localhost)
+const decksURL = "http://192.168.40.230:4030/api/v2/decks"
+// PRODUCTION: const decksURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/decks"
 const selectDeckURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/selectDeck"
 const postAssignDeckURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/assignDeck"
 const postRoundImageURL = "https://bmarz6chil.execute-api.us-west-1.amazonaws.com/dev/api/v2/postRoundImage"
@@ -290,66 +292,36 @@ async function createNextRound(userData){
 
 
 async function postCreateRounds(gameCode, imageURLs){
-try{    
-    const payload = {
-        game_code: gameCode,
-        images: imageURLs
-    };
-    
-   // console.log("Create Rounds payload: ", payload);
-    //console.log("above postCreationRounds");
-   // console.log("Create Rounds URL: ", createRounds);
-   // console.log("1")
-    const imageURL = await axios.post(createRounds, payload)
-   // .then(response => response.data.image)
-   .then(response => response.data)
+    try{    
+        const payload = {
+            game_code: gameCode,
+            images: imageURLs
+        };
+        
+        const response = await axios.post(createRounds, payload)
+            .then(response => response.data);
 
-//console.log("ALL IMAGE URLS: ", )
-   // console.log("ImageURL: ", imageURL)
-    //console.log("2")
-   // console.log(imageURL.image);
-   //const data = await response.json();
-  
+        // Backend returns { "image": "url_string" }
+        // So we access response.image directly (not response.image.image)
+        if (response && response.image) {
+            return response.image;
+        }
+        
+        // Fallback to first URL if backend doesn't return image
+        if (imageURLs && imageURLs.length > 0) {
+            return imageURLs[0];
+        }
+        
+        return undefined;
 
-  // const data = response.json();
-  //const data = await imageURL.image();
-  // console.log("3")
-  // console.log('Returned URL: ', data);
-
-
-
-
-/*
-   const deckresponse =  await axios.post(selectDeckURL, payload)
-   .then(response => response.data)
-console.log("Select Deck Response: ", deckresponse)
-*/
-   return imageURL.image;
-
-}        
-catch(error) {
-    if(error.response){
-        // the request was made and the server responded with the response code that is out of 2xx
-      //  console.log('response',error.response.data);
-      //  console.log('status ',error.response.status);
-        console.log('headers ',error.response.headers);
-        console.log('request ',error.request );
-        console.log('error', error.message);
-       
-  
-    } else if (error.request) {
-        // the request was made but no response was recieved the `error.request` is an instance of XMLHttpRequest in the browser and a instance of http.ClientRequet in Node.Js
-        console.log(error.request);
-    }else {
-        // Something happened that triggered an error
-        console.log('error', error.message);
+    } catch(error) {
+        console.log('postCreateRounds error:', error.message);
+        if (imageURLs && imageURLs.length > 0) {
+            return imageURLs[0];
+        }
+        throw error;
     }
-    console.log('err--',error.config);
-    
-  };
-   
 }
-
 
 
 // old code without retry

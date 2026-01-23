@@ -53,6 +53,7 @@ export default function Waiting() {
       let imageURL = '';
       if (userData.isApi) {
         const imageURLs = await getApiImages(userData);
+        console.log(imageURLs)
         imageURL = await postCreateRounds(userData.gameCode, imageURLs);
       }
       await publish({
@@ -102,7 +103,7 @@ export default function Waiting() {
           imageURL: event.data.imageURL,
         };
         setUserData(updatedUserData);
-        setCookie('userData', updatedUserData, { path: '/' });
+        //setCookie('userData', updatedUserData, { path: '/' });
         navigation.navigate('Caption', { state: updatedUserData });
       }
     });

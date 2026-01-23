@@ -6,9 +6,30 @@ const giphyURL = "https://api.giphy.com/v1/gifs/trending?api_key=Fo9QcAQLMFI8V6p
 const harvardURL= "https://api.harvardartmuseums.org/image?apikey=c10d3ea9-27b1-45b4-853a-3872440d9782"
 
 async function getApiImagesHelper(userData){
-    if(userData.deckUID === "500-000005"){
-        const googlePhotos = randomize(userData.googlePhotos, userData.numOfRounds)
-        return validateCount(googlePhotos, userData.numOfRounds)
+
+
+    //user will select and 
+        if (userData?.selectedPhotos && userData.selectedPhotos.length > 0 && 
+        userData.deckUID?.startsWith('device-')) {
+        let deviceImages = userData.selectedPhotos.map(photo => {
+            return photo.url || photo.image_url || photo.thumbnailUrl
+        }).filter(url => url) 
+    
+        const numOfRounds = userData.numOfRounds || deviceImages.length;
+        deviceImages = randomize(deviceImages, numOfRounds)
+        return deviceImages
+    }
+    
+    // For Google Photos
+    if (userData?.selectedPhotos && userData.selectedPhotos.length > 0 && 
+        userData.deckUID?.startsWith('google-photos-')) {
+        let googlePhotos = userData.selectedPhotos.map(photo => {
+            return photo.url || photo.baseUrl;
+        }).filter(url => url);
+        
+        const numOfRounds = userData.numOfRounds || googlePhotos.length;
+        googlePhotos = randomize(googlePhotos, numOfRounds);
+        return googlePhotos;
     }
     else if (userData.deckUID === "500-000006") {
         const imagesInfo = await axios.get(clevelandURL + "?limit=100").then(response => response.data.data)
@@ -59,6 +80,26 @@ async function getApiImagesHelper(userData){
         let cnnImages = await getCnnImgURLs(cnnURL)
         cnnImages = randomize(cnnImages, userData.numOfRounds)
         return validateCount(cnnImages, userData.numOfRounds)
+    }
+    else if (userData.deckUID === "500-000011") {
+        // Handle device images uploaded to Google Drive
+        console.log("📸 Processing device images from userData.selectedPhotos");
+        if (!userData.selectedPhotos || userData.selectedPhotos.length === 0) {
+            console.error("No selectedPhotos found in userData");
+            return []
+        }
+        
+        // Extract Google Drive URLs from selectedPhotos
+        let deviceImages = userData.selectedPhotos.map(photo => {
+            return photo.url || photo.webContentLink || photo.thumbnailUrl
+        }).filter(url => url) // Remove any undefined/null values
+        
+        console.log(`📸 Found ${deviceImages.length} device images`);
+        
+        // For device images, return whatever we have (images will be reused if less than numOfRounds)
+        deviceImages = randomize(deviceImages, userData.numOfRounds)
+        console.log(` Returning ${deviceImages.length} images for game`);
+        return deviceImages
     }
     return []
 }

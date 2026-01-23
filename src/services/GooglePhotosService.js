@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { REACT_APP_GOOGLE_CLIENT_ID_wEB } from "@env";
+import { REACT_APP_GOOGLE_CLIENT_ID_wEB, REACT_APP_GOOGLE_CLIENT_SECRET_WEB } from "@env";
 
 const GOOGLE_CLIENT_ID = REACT_APP_GOOGLE_CLIENT_ID_wEB;
-const GOOGLE_CLIENT_SECRET = "YOUR_CLIENT_SECRET"; // You'll need to add this
+const GOOGLE_CLIENT_SECRET = REACT_APP_GOOGLE_CLIENT_SECRET_WEB;
 const REDIRECT_URI = "http://localhost:19006/auth/callback"; // Web callback URL
 
 class GooglePhotosService {
@@ -64,11 +64,22 @@ class GooglePhotosService {
 
   // Refresh access token using refresh token
   async refreshAccessToken() {
+    // Load tokens from storage first if not in memory
     if (!this.refreshToken) {
-      throw new Error("No refresh token available");
+      const tokens = await this.loadTokens();
+      if (tokens && tokens.refreshToken) {
+        this.refreshToken = tokens.refreshToken;
+      } else {
+        throw new Error("No refresh token available. Please sign in again.");
+      }
     }
 
     try {
+      console.log("Refreshing access token...");
+      console.log("Using client ID:", GOOGLE_CLIENT_ID);
+      console.log("Using client secret:", GOOGLE_CLIENT_SECRET ? "Set" : "Missing");
+      console.log("Using refresh token:", this.refreshToken ? this.refreshToken.substring(0, 20) + "..." : "Missing");
+
       const response = await fetch("https://oauth2.googleapis.com/token", {
         method: "POST",
         headers: {
@@ -82,16 +93,22 @@ class GooglePhotosService {
         }).toString(),
       });
 
+      console.log("Refresh token response status:", response.status);
       const data = await response.json();
+      console.log("Refresh token response:", data);
 
       if (data.access_token) {
         await this.storeTokens(data.access_token, this.refreshToken);
         return data.access_token;
       } else {
-        throw new Error("Failed to refresh token");
+        // Clear invalid tokens and require re-authentication
+        await this.clearTokens();
+        throw new Error(`Failed to refresh token: ${data.error_description || data.error || "Unknown error"}. Please sign in again.`);
       }
     } catch (error) {
       console.error("Error refreshing token:", error);
+      // Clear tokens on refresh failure
+      await this.clearTokens();
       throw error;
     }
   }
@@ -101,28 +118,35 @@ class GooglePhotosService {
     if (!this.accessToken) {
       const tokens = await this.loadTokens();
       if (!tokens) {
-        throw new Error("No authentication tokens found");
+        throw new Error("No authentication tokens found. Please sign in.");
       }
       this.accessToken = tokens.accessToken;
       this.refreshToken = tokens.refreshToken;
     }
 
-    // Try to use current token, refresh if it fails
+    // Validate token by trying to use it with a lightweight API call
     try {
-      const response = await fetch("https://www.googleapis.com/oauth2/v1/tokeninfo", {
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-        },
-      });
+      // Use the newer v3 tokeninfo endpoint
+      const response = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${this.accessToken}`);
 
       if (!response.ok) {
+        console.log("Token validation failed, status:", response.status);
         throw new Error("Token invalid");
       }
 
+      const tokenInfo = await response.json();
+      console.log("Token is valid, expires in:", tokenInfo.expires_in, "seconds");
+      
       return this.accessToken;
     } catch (error) {
-      console.log("Token invalid, refreshing...");
-      return await this.refreshAccessToken();
+      console.log("Token invalid, attempting to refresh...");
+      try {
+        return await this.refreshAccessToken();
+      } catch (refreshError) {
+        // If refresh fails, clear tokens and throw error
+        await this.clearTokens();
+        throw new Error("Authentication expired. Please sign in again.");
+      }
     }
   }
 

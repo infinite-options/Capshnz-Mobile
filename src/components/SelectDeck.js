@@ -42,6 +42,9 @@ export default function SelectDeck() {
         await publish({ data: { message: "Deck Selected" } });
         navigation.navigate("GooglePhotos", { state: userData });
         return;
+      } else if (deckTitle === "Select from device") {
+        navigation.navigate("SelectFromDevice", {...userData});
+        return;
       } else if (
         deckTitle === "Cleveland Gallery" ||
         deckTitle === "Chicago Gallery" ||

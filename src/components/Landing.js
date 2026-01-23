@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, Image, Platform } from "react-native";
 import { addUserByEmail } from "../util/Api";
 import { getBuildInfo } from "../util/buildInfo";
 
@@ -14,6 +14,38 @@ export default function Landing() {
   // Get build information
   const buildInfo = getBuildInfo();
   console.log("Landing component - Build Info:", buildInfo);
+
+  // Check for pending OAuth on mount (web only)
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      // Check URL for OAuth callback
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const state = urlParams.get('state');
+      
+      if (code && state) {
+        console.log("Landing: OAuth callback detected, storing code and navigating to GooglePhotos...");
+        // Store in localStorage for GooglePhotos to process
+        localStorage.setItem("oauth_pending_code", code);
+        localStorage.setItem("oauth_pending_state", state);
+        localStorage.setItem("oauth_pending_scope", urlParams.get("scope") || "");
+        
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Navigate to GooglePhotos
+        navigation.navigate('GooglePhotos');
+        return;
+      }
+      
+      // Check for pending OAuth code from localStorage
+      const pendingCode = localStorage.getItem("oauth_pending_code");
+      if (pendingCode) {
+        console.log("Landing: Found pending OAuth in localStorage, navigating to GooglePhotos...");
+        navigation.navigate('GooglePhotos');
+      }
+    }
+  }, []);
 
   const handleEmailChange = (inputEmail) => {
     setEmail(inputEmail);
